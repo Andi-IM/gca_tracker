@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-24T23:26:46.1012811+07:00",
+  "title": "Design System: Google Cloud Arcade Tracker",
+  "extensions": {
+    "colorMeta": {
+      "google-blue": {
+        "role": "primary",
+        "displayName": "Console Blue",
+        "canonical": "#1a73e8",
+        "tonalRamp": ["#06214a", "#0b3d82", "#155fc0", "#1a73e8", "#5b9df1", "#9bc3f8", "#d2e3fc", "#e8f0fe"]
+      },
+      "google-green": {
+        "role": "secondary",
+        "displayName": "Completion Green",
+        "canonical": "#34a853",
+        "tonalRamp": ["#063b16", "#0b6624", "#137333", "#34a853", "#6fca85", "#a8ddb5", "#dff4e7", "#f0fbf3"]
+      },
+      "google-yellow": {
+        "role": "secondary",
+        "displayName": "Caution Yellow",
+        "canonical": "#fbbc04",
+        "tonalRamp": ["#4a3100", "#735000", "#8a5a00", "#c88700", "#fbbc04", "#ffd966", "#fff1cc", "#fff8df"]
+      },
+      "google-red": {
+        "role": "secondary",
+        "displayName": "Validation Red",
+        "canonical": "#ea4335",
+        "tonalRamp": ["#4a0703", "#7f130c", "#b3261e", "#ea4335", "#f4776d", "#f8aaa4", "#fce8e6", "#fff3f2"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink Slate",
+        "canonical": "#172033",
+        "tonalRamp": ["#0b1020", "#172033", "#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0"]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Soft Panel Fill",
+        "canonical": "#f5f8fc",
+        "tonalRamp": ["#172033", "#334155", "#5f6b7a", "#94a3b8", "#d9e1ec", "#eef3f9", "#f5f8fc", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Panel and section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Status text, explanatory copy, table rows, and notes."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, chips, table headers, small links, and compact controls."
+      }
+    },
+    "shadows": [
+      {
+        "name": "panel-ambient",
+        "value": "0 8px 24px rgba(23, 32, 51, 0.06)",
+        "purpose": "Low ambient separation for top-level panels and notices."
+      },
+      {
+        "name": "focus-glow",
+        "value": "0 0 0 3px rgba(26, 115, 232, 0.14)",
+        "purpose": "Keyboard and input focus emphasis."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-default",
+        "value": "background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease",
+        "purpose": "Suggested state transition for controls when adding motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "900px"
+      },
+      {
+        "name": "compact",
+        "value": "560px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action for reading the public profile.",
+      "html": "<button class=\"ds-btn-primary\">Baca Profil</button>",
+      "css": ".ds-btn-primary { min-height: 34px; border: 1px solid var(--blue, #1a73e8); border-radius: 6px; background: var(--blue, #1a73e8); color: var(--white, #fff); cursor: pointer; font: 700 13px Arial, Helvetica, sans-serif; padding: 7px 10px; transition: background 0.15s ease, border-color 0.15s ease; } .ds-btn-primary:hover { background: #155fc0; border-color: #155fc0; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.14); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Low-emphasis utility action such as clearing the stored URL.",
+      "html": "<button class=\"ds-btn-secondary\">Hapus URL</button>",
+      "css": ".ds-btn-secondary { min-height: 34px; border: 1px solid var(--line, #d9e1ec); border-radius: 6px; background: var(--white, #fff); color: var(--ink, #172033); cursor: pointer; font: 700 13px Arial, Helvetica, sans-serif; padding: 7px 10px; transition: background 0.15s ease, box-shadow 0.15s ease; } .ds-btn-secondary:hover { background: var(--soft, #f5f8fc); } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.14); }"
+    },
+    {
+      "name": "URL Input",
+      "kind": "input",
+      "refersTo": "input-url",
+      "description": "Full-width profile URL field with clear focus state.",
+      "html": "<label class=\"ds-field\"><span>URL publik Skills Google</span><input class=\"ds-input\" type=\"url\" value=\"https://www.skills.google/public_profiles/...\" /></label>",
+      "css": ".ds-field { display: block; font-family: Arial, Helvetica, sans-serif; } .ds-field span { display: block; margin-bottom: 8px; color: var(--muted, #5f6b7a); font-size: 14px; font-weight: 700; } .ds-input { width: 100%; min-height: 46px; border: 1px solid #b9c5d5; border-radius: 6px; padding: 10px 12px; color: var(--ink, #172033); font: inherit; outline: none; } .ds-input:focus { border-color: var(--blue, #1a73e8); box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.14); }"
+    },
+    {
+      "name": "Panel Card",
+      "kind": "card",
+      "refersTo": "card-panel",
+      "description": "Top-level white surface for calculator, target, and table sections.",
+      "html": "<section class=\"ds-panel\"><h2>Hasil</h2><p>Ringkasan progres dan status milestone.</p></section>",
+      "css": ".ds-panel { border: 1px solid var(--line, #d9e1ec); border-radius: 8px; background: var(--white, #fff); box-shadow: 0 8px 24px rgba(23, 32, 51, 0.06); color: var(--ink, #172033); font-family: Arial, Helvetica, sans-serif; padding: 22px; } .ds-panel h2 { margin: 0 0 16px; font-size: 22px; } .ds-panel p { margin: 0; color: var(--muted, #5f6b7a); line-height: 1.55; }"
+    },
+    {
+      "name": "Metric Card",
+      "kind": "card",
+      "refersTo": "card-panel",
+      "description": "Nested result tile with label and large numeric value.",
+      "html": "<article class=\"ds-metric\"><span>Total Arcade Points dasar</span><strong>13</strong></article>",
+      "css": ".ds-metric { min-height: 112px; border: 1px solid var(--line, #d9e1ec); border-radius: 8px; padding: 16px; background: var(--soft, #f5f8fc); color: var(--ink, #172033); font-family: Arial, Helvetica, sans-serif; } .ds-metric span { display: block; min-height: 36px; color: var(--muted, #5f6b7a); font-size: 13px; font-weight: 700; line-height: 1.35; } .ds-metric strong { display: block; margin-top: 12px; font-size: 34px; line-height: 1; }"
+    },
+    {
+      "name": "Done Chip",
+      "kind": "chip",
+      "refersTo": "chip-done",
+      "description": "Completed target marker.",
+      "html": "<span class=\"ds-chip-done\">Selesai</span>",
+      "css": ".ds-chip-done { display: inline-flex; align-items: center; border-radius: 999px; background: #dff4e7; color: #137333; padding: 4px 8px; font: 800 12px Arial, Helvetica, sans-serif; }"
+    },
+    {
+      "name": "Todo Chip",
+      "kind": "chip",
+      "refersTo": "chip-todo",
+      "description": "Remaining target marker.",
+      "html": "<span class=\"ds-chip-todo\">Target</span>",
+      "css": ".ds-chip-todo { display: inline-flex; align-items: center; border-radius: 999px; background: #fff1cc; color: #8a5a00; padding: 4px 8px; font: 800 12px Arial, Helvetica, sans-serif; }"
+    },
+    {
+      "name": "Target Row",
+      "kind": "custom",
+      "refersTo": "card-panel",
+      "description": "Compact row for Arcade Game and Skill Badge targets.",
+      "html": "<li class=\"ds-target-row\"><div><strong>Low Code</strong><span>1q-lowcode-92316 - 2026-07</span><a href=\"#\">Buka Game</a></div><span class=\"ds-chip-todo\">Kerjakan</span></li>",
+      "css": ".ds-target-row { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; border: 1px solid var(--line, #d9e1ec); border-radius: 8px; background: var(--soft, #f5f8fc); padding: 10px 12px; color: var(--ink, #172033); font-family: Arial, Helvetica, sans-serif; list-style: none; } .ds-target-row strong, .ds-target-row span { display: block; } .ds-target-row span { margin-top: 3px; color: var(--muted, #5f6b7a); font-size: 12px; } .ds-target-row a { display: inline-block; margin-top: 6px; color: var(--blue, #1a73e8); font-size: 12px; font-weight: 800; } .ds-chip-todo { flex: 0 0 auto; border-radius: 999px; background: #fff1cc; color: #8a5a00; padding: 4px 8px; font: 800 12px Arial, Helvetica, sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Progress Console",
+    "overview": "Google Cloud Arcade Tracker uses a calm utility interface: structured, low-noise, and built for quick progress validation. The visual system treats the page as a compact operational console where every panel answers a practical question: what is my current score, what milestone counts, and what should I do next?\n\nThe incumbent design borrows Google product colors as functional status accents, not as decoration. White panels, pale blue page wash, restrained borders, and small dense labels keep attention on the milestone math and target lists.",
+    "keyCharacteristics": [
+      "Scan-first calculator layout with clear input, output, target, and rule zones.",
+      "Google-color status accents used sparingly for action, success, warning, and error.",
+      "Compact card rhythm with 8px corners, thin borders, and low ambient depth.",
+      "Indonesian-first copy with direct labels and factual status messages."
+    ],
+    "rules": [
+      {
+        "name": "The Accent-As-State Rule",
+        "body": "Google colors should communicate state or action. Do not use them as broad decorative fills.",
+        "section": "colors"
+      },
+      {
+        "name": "The Quiet Neutral Rule",
+        "body": "Most of the screen stays white, soft blue-gray, ink, and muted text so milestone numbers remain easy to compare.",
+        "section": "colors"
+      },
+      {
+        "name": "The Numbers Need Air Rule",
+        "body": "Metric values are the largest text inside panels and sit below compact labels; do not bury calculated results in paragraph copy.",
+        "section": "typography"
+      },
+      {
+        "name": "The Soft Layer Rule",
+        "body": "Use one ambient shadow for top-level surfaces and tonal fills for nested content; do not stack multiple shadow styles inside the calculator.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the page organized around the current workflow: input profile, read results, inspect targets, verify rules.",
+      "Do reserve strong color for action, status, validation, and milestone emphasis.",
+      "Do keep nested content compact and scannable with borders, pale fills, and short labels.",
+      "Do preserve Indonesian labels and factual reward language."
+    ],
+    "donts": [
+      "Don't turn this into a marketing landing page or oversized hero experience.",
+      "Don't add decorative gradients, illustrations, or color blocks that compete with calculation output.",
+      "Don't invent visual proof, testimonials, partner claims, or reward guarantees.",
+      "Don't use additional scoring states or progress concepts that are not represented in the app behavior."
+    ]
+  }
+}

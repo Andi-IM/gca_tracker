@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+.git
+.agents
+docs
+tests
+.env
+.env*.local
+coverage
+dist
+out
+.next

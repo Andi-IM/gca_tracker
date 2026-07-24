@@ -1,0 +1,12 @@
+{
+  "name": "arcade-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "test": "node tests/run-cases.js"
+  },
+  "dependencies": {
+    "playwright": "^1.49.1"
+  }
+}
