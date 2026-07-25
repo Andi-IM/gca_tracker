@@ -151,6 +151,13 @@ const storedProfile = {
   completed_skill_badge_targets: [],
   missing_skill_badge_targets: []
 };
+const legacyProfile = { ...storedProfile };
+delete legacyProfile.completed_skill_badges;
+store.set(SCRAPED_PROFILE_STORAGE_KEY, JSON.stringify({
+  url: 'https://www.skills.google/public_profiles/example',
+  profile: legacyProfile
+}));
+assert.deepEqual(loadScrapedProfile('https://www.skills.google/public_profiles/example'), { ...legacyProfile, completed_skill_badges: [] });
 saveScrapedProfile('https://www.skills.google/public_profiles/example', storedProfile);
 assert.deepEqual(loadScrapedProfile('https://www.skills.google/public_profiles/example'), storedProfile);
 assert.equal(loadScrapedProfile('https://www.skills.google/public_profiles/other'), null);

@@ -36,12 +36,11 @@ export function clearBonusMilestone(): void {
   window.localStorage.removeItem(BONUS_MILESTONE_STORAGE_KEY);
 }
 
-function isScrapedProfile(value: unknown): value is ScrapedProfile {
-  if (!value || typeof value !== 'object') return false;
+function normalizeScrapedProfile(value: unknown): ScrapedProfile | null {
+  if (!value || typeof value !== 'object') return null;
   const profile = value as Partial<ScrapedProfile>;
-  return typeof profile.arcade_games_completed === 'number'
+  const isValid = typeof profile.arcade_games_completed === 'number'
     && typeof profile.skill_badges_completed === 'number'
-    && Array.isArray(profile.completed_skill_badges)
     && Array.isArray(profile.matched_arcade_games)
     && Array.isArray(profile.completed_arcade_games)
     && Array.isArray(profile.missing_arcade_games)
@@ -49,6 +48,12 @@ function isScrapedProfile(value: unknown): value is ScrapedProfile {
     && Array.isArray(profile.skill_badge_targets)
     && Array.isArray(profile.completed_skill_badge_targets)
     && Array.isArray(profile.missing_skill_badge_targets);
+  if (!isValid) return null;
+
+  return {
+    ...profile,
+    completed_skill_badges: Array.isArray(profile.completed_skill_badges) ? profile.completed_skill_badges : []
+  } as ScrapedProfile;
 }
 
 export function loadScrapedProfile(url: string): ScrapedProfile | null {
@@ -59,8 +64,9 @@ export function loadScrapedProfile(url: string): ScrapedProfile | null {
     if (!raw) return null;
 
     const stored = JSON.parse(raw) as Partial<StoredScrapedProfile>;
-    if (stored.url !== url.trim() || !isScrapedProfile(stored.profile)) return null;
-    return stored.profile;
+    const profile = normalizeScrapedProfile(stored.profile);
+    if (stored.url !== url.trim() || !profile) return null;
+    return profile;
   } catch {
     window.localStorage.removeItem(SCRAPED_PROFILE_STORAGE_KEY);
     return null;
