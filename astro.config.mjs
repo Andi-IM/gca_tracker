@@ -6,6 +6,16 @@ import preact from '@astrojs/preact';
 export default defineConfig({
   integrations: [preact()],
   output: 'static',
+  vite: {
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3001',
+          changeOrigin: true
+        }
+      }
+    }
+  },
   build: {
     format: 'directory'
   }

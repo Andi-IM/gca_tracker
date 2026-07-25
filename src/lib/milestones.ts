@@ -62,3 +62,4 @@ export const REWARD_NOTICE =
   'Mencapai milestone fasilitator tidak otomatis membuat peserta memenuhi syarat mendapatkan swag atau hadiah. Bonus poin hanya menambah poin Arcade untuk membantu mencapai pencapaian Google Skills Arcade Player.';
 
 export const PUBLIC_PROFILE_URL_STORAGE_KEY = 'google-skills-arcade:public-profile-url';
+export const SCRAPED_PROFILE_STORAGE_KEY = 'google-skills-arcade:scraped-profile';

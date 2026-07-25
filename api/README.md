@@ -1,23 +1,19 @@
 # Arcade Tracker API
 
-Backend API for scraping Google Skills Arcade profiles.
+Python backend API for scraping Google Skills Arcade profiles with `httpx` and `lxml`.
 
 ## Setup
 
-1. Install dependencies:
+1. Create the project virtual environment and install dependencies with `uv`:
    ```bash
-   npm install
-   ```
-
-2. Install Playwright browsers:
-   ```bash
-   npx playwright install chromium
+   uv sync
    ```
 
 ## Running
 
 ```bash
-npm start
+cd ..
+uv run python -m api.server
 ```
 
 The API will be available at `http://localhost:3001`.
@@ -34,6 +30,8 @@ Response:
 {
   "status": "ok",
   "timestamp": "2026-07-25T15:30:00.000Z"
+  "runtime": "python",
+  "parser": "lxml"
 }
 ```
 
@@ -70,25 +68,24 @@ Response:
 ## Environment Variables
 
 - `PORT`: Server port (default: 3001)
-- `PLAYWRIGHT_CHANNEL`: Browser channel (default: "chrome")
+- `ALLOWED_ORIGIN`: Allowed frontend origin (default: `*`; set this in production)
 
 ## CORS
 
-CORS is enabled for all origins. For production, configure allowed origins in `server.js`.
+CORS is enabled for all origins. For production, configure allowed origins in `server.py`.
 
 ## Deployment
 
-This API can be deployed as a standalone Node.js service or as serverless functions:
+This API can be deployed as a standalone Python service. The repository includes
+`api/Dockerfile`; build it from the repository root so the image also receives
+the shared `data/` directory. The image uses `uv` and an isolated environment.
 
-### Vercel
-1. Create `vercel.json` in this directory
-2. Deploy with `vercel deploy`
+### VPS / Railway / Render / Fly.io
 
-### Cloudflare Workers
-1. Use `wrangler` to deploy
-2. Note: Playwright requires paid plan on Cloudflare
-
-### Railway/Render/Fly.io
 1. Connect your repository
-2. Set build command: `cd api && npm install`
-3. Set start command: `cd api && npm start`
+2. Set build command: `uv sync --frozen --no-dev`
+3. Set start command: `uv run --no-sync python -m api.server`
+
+## Notes
+
+This backend intentionally does not run a headless browser. It fetches the public profile with `httpx` and parses the returned HTML with `lxml`, so it is lighter than the previous Playwright service. If Google moves the badge list behind client-only rendering, the API may need a browser-capable fallback again.

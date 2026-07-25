@@ -2,16 +2,8 @@
   "name": "arcade-tracker-api",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5"
-  },
-  "devDependencies": {
-    "playwright": "^1.49.1"
+    "start": "cd .. && uv run python -m api.server",
+    "dev": "cd .. && uv run python -m api.server"
   }
 }

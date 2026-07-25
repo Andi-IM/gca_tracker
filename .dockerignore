@@ -1,4 +1,9 @@
 node_modules
+.venv
+.uv-cache
+__pycache__
+.pytest_cache
+pytest-cache-files-*
 npm-debug.log
 .git
 .agents

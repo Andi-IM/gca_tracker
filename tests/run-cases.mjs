@@ -8,9 +8,9 @@ const __dirname = path.dirname(__filename);
 
 // Import from new module structure
 import { calculateProgress, findHighestMilestone, getNextMilestone, getProgramStatus } from '../src/lib/calculator.js';
-import { PUBLIC_PROFILE_URL_STORAGE_KEY, MILESTONES } from '../src/lib/milestones.js';
-import { loadPublicProfileUrl, savePublicProfileUrl } from '../src/lib/storage.js';
-import { scrapeProfileHtml, extractEarnedBadges } from '../src/lib/scraper.js';
+import { PUBLIC_PROFILE_URL_STORAGE_KEY, SCRAPED_PROFILE_STORAGE_KEY, MILESTONES } from '../src/lib/milestones.js';
+import { loadPublicProfileUrl, savePublicProfileUrl, loadScrapedProfile, saveScrapedProfile, clearScrapedProfile } from '../src/lib/storage.js';
+import { scrapeProfileHtml, extractEarnedBadges, buildScrapeProfileUrl } from '../src/lib/scraper.js';
 import { getNextTargetPlan, loadSyllabus } from '../src/lib/planner.js';
 
 // Load syllabus data
@@ -118,11 +118,37 @@ for (const testCase of cases) {
 assert.equal(calculateProgress({ arcade_games_completed: -1, skill_badges_completed: 0, bonus_milestone_completed: false }).errors.length, 1);
 assert.equal(calculateProgress({ arcade_games_completed: 1.5, skill_badges_completed: 0, bonus_milestone_completed: false }).errors.length, 1);
 assert.equal(PUBLIC_PROFILE_URL_STORAGE_KEY, 'google-skills-arcade:public-profile-url');
+assert.equal(SCRAPED_PROFILE_STORAGE_KEY, 'google-skills-arcade:scraped-profile');
+assert.equal(
+  buildScrapeProfileUrl('https://www.skills.google/public_profiles/example'),
+  '/api/scrape?url=https%3A%2F%2Fwww.skills.google%2Fpublic_profiles%2Fexample'
+);
+assert.equal(
+  buildScrapeProfileUrl('https://www.skills.google/public_profiles/example', 'http://localhost:3001/'),
+  'http://localhost:3001/api/scrape?url=https%3A%2F%2Fwww.skills.google%2Fpublic_profiles%2Fexample'
+);
 
 savePublicProfileUrl('  https://www.skills.google/public_profiles/example  ');
 assert.equal(loadPublicProfileUrl(), 'https://www.skills.google/public_profiles/example');
 savePublicProfileUrl('');
 assert.equal(loadPublicProfileUrl(), null);
+
+const storedProfile = {
+  arcade_games_completed: 2,
+  skill_badges_completed: 4,
+  matched_arcade_games: [],
+  completed_arcade_games: [],
+  missing_arcade_games: [],
+  target_arcade_games: [],
+  skill_badge_targets: [],
+  completed_skill_badge_targets: [],
+  missing_skill_badge_targets: []
+};
+saveScrapedProfile('https://www.skills.google/public_profiles/example', storedProfile);
+assert.deepEqual(loadScrapedProfile('https://www.skills.google/public_profiles/example'), storedProfile);
+assert.equal(loadScrapedProfile('https://www.skills.google/public_profiles/other'), null);
+clearScrapedProfile();
+assert.equal(loadScrapedProfile('https://www.skills.google/public_profiles/example'), null);
 
 assert.equal(syllabusAssertions.source.title, 'Silabus');
 assert.equal(syllabusAssertions.source.program, 'Google Skills Arcade Fasilitator 2026');

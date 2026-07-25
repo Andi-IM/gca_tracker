@@ -100,8 +100,27 @@ export function scrapeProfileHtml(html: string, syllabus: SyllabusAssertions): S
   };
 }
 
+function getConfiguredApiBaseUrl(): string {
+  return ((import.meta as unknown as { env?: { PUBLIC_API_URL?: string } }).env?.PUBLIC_API_URL || '').replace(/\/+$/, '');
+}
+
+export function buildScrapeProfileUrl(url: string, apiBaseUrl = getConfiguredApiBaseUrl()): string {
+  const normalizedApiBaseUrl = apiBaseUrl.replace(/\/+$/, '');
+  const endpoint = `${normalizedApiBaseUrl}/api/scrape`;
+  return `${endpoint}?url=${encodeURIComponent(url)}`;
+}
+
 export async function scrapePublicProfile(url: string): Promise<ScrapedProfile> {
-  const response = await fetch(`/api/scrape?url=${encodeURIComponent(url)}`, { credentials: 'omit' });
+  let response: Response;
+  try {
+    response = await fetch(buildScrapeProfileUrl(url), { credentials: 'omit' });
+  } catch {
+    throw new Error('API scraper belum berjalan. Jalankan server API di http://localhost:3001 lalu coba lagi.');
+  }
+
+  if (response.status === 404) {
+    throw new Error('Endpoint scraper tidak ditemukan. Pastikan Astro dev proxy atau PUBLIC_API_URL mengarah ke server API.');
+  }
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   
   const data = await response.json();

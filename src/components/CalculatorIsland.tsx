@@ -2,7 +2,7 @@ import { useState, useEffect } from 'preact/hooks';
 import { calculateProgress } from '../lib/calculator';
 import { loadSyllabus } from '../lib/planner';
 import { scrapePublicProfile } from '../lib/scraper';
-import { loadPublicProfileUrl, savePublicProfileUrl } from '../lib/storage';
+import { loadPublicProfileUrl, savePublicProfileUrl, loadScrapedProfile, saveScrapedProfile, clearScrapedProfile } from '../lib/storage';
 import type { CalculatorResult } from '../lib/calculator';
 import type { ScrapedProfile, SyllabusAssertions } from '../lib/types';
 import InputPanel from './InputPanel';
@@ -28,7 +28,15 @@ export default function CalculatorIsland() {
     const savedUrl = loadPublicProfileUrl();
     if (savedUrl) {
       setPublicProfileUrl(savedUrl);
-      setStorageStatus('URL tersimpan sementara di browser ini.');
+      const savedProfile = loadScrapedProfile(savedUrl);
+      if (savedProfile) {
+        setScrapeResult(savedProfile);
+        setArcadeGames(savedProfile.arcade_games_completed);
+        setSkillBadges(savedProfile.skill_badges_completed);
+        setStorageStatus(`Data profil tersimpan: ${savedProfile.arcade_games_completed} Arcade Games Juli dan ${savedProfile.skill_badges_completed} Badge Keahlian.`);
+      } else {
+        setStorageStatus('URL tersimpan sementara di browser ini.');
+      }
     } else {
       setStorageStatus('URL belum diisi. Jika diisi, URL akan disimpan sementara di browser ini.');
     }
@@ -51,6 +59,10 @@ export default function CalculatorIsland() {
   const handleClearUrl = () => {
     setPublicProfileUrl('');
     savePublicProfileUrl('');
+    clearScrapedProfile();
+    setScrapeResult(null);
+    setArcadeGames(0);
+    setSkillBadges(0);
     setStorageStatus('URL belum diisi. Jika diisi, URL akan disimpan sementara di browser ini.');
   };
 
@@ -67,6 +79,7 @@ export default function CalculatorIsland() {
     try {
       const scraped = await scrapePublicProfile(publicProfileUrl);
       setScrapeResult(scraped);
+      saveScrapedProfile(publicProfileUrl, scraped);
       setArcadeGames(scraped.arcade_games_completed);
       setSkillBadges(scraped.skill_badges_completed);
       setStorageStatus(`Profil terbaca: ${scraped.arcade_games_completed} Arcade Games Juli dan ${scraped.skill_badges_completed} Badge Keahlian terdeteksi.`);

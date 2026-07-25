@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import path, { join } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);

@@ -5,6 +5,12 @@ dist/
 
 # dependencies
 node_modules/
+.venv/
+.uv-cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
 
 # logs
 npm-debug.log*
