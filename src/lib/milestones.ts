@@ -63,3 +63,4 @@ export const REWARD_NOTICE =
 
 export const PUBLIC_PROFILE_URL_STORAGE_KEY = 'google-skills-arcade:public-profile-url';
 export const SCRAPED_PROFILE_STORAGE_KEY = 'google-skills-arcade:scraped-profile';
+export const BONUS_MILESTONE_STORAGE_KEY = 'google-skills-arcade:bonus-milestone-completed';

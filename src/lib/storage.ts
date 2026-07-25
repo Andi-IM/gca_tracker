@@ -1,4 +1,4 @@
-import { PUBLIC_PROFILE_URL_STORAGE_KEY, SCRAPED_PROFILE_STORAGE_KEY } from './milestones';
+import { BONUS_MILESTONE_STORAGE_KEY, PUBLIC_PROFILE_URL_STORAGE_KEY, SCRAPED_PROFILE_STORAGE_KEY } from './milestones';
 import type { ScrapedProfile } from './types';
 
 interface StoredScrapedProfile {
@@ -19,6 +19,21 @@ export function savePublicProfileUrl(value: string): void {
   } else {
     window.localStorage.removeItem(PUBLIC_PROFILE_URL_STORAGE_KEY);
   }
+}
+
+export function loadBonusMilestone(): boolean {
+  if (typeof window === 'undefined' || !window.localStorage) return false;
+  return window.localStorage.getItem(BONUS_MILESTONE_STORAGE_KEY) === 'true';
+}
+
+export function saveBonusMilestone(value: boolean): void {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  window.localStorage.setItem(BONUS_MILESTONE_STORAGE_KEY, String(value));
+}
+
+export function clearBonusMilestone(): void {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  window.localStorage.removeItem(BONUS_MILESTONE_STORAGE_KEY);
 }
 
 function isScrapedProfile(value: unknown): value is ScrapedProfile {

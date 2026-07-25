@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 // Import from new module structure
 import { calculateProgress, findHighestMilestone, getNextMilestone, getProgramStatus } from '../src/lib/calculator.js';
 import { PUBLIC_PROFILE_URL_STORAGE_KEY, SCRAPED_PROFILE_STORAGE_KEY, MILESTONES } from '../src/lib/milestones.js';
-import { loadPublicProfileUrl, savePublicProfileUrl, loadScrapedProfile, saveScrapedProfile, clearScrapedProfile } from '../src/lib/storage.js';
+import { loadPublicProfileUrl, savePublicProfileUrl, loadScrapedProfile, saveScrapedProfile, clearScrapedProfile, loadBonusMilestone, saveBonusMilestone, clearBonusMilestone } from '../src/lib/storage.js';
 import { scrapeProfileHtml, extractEarnedBadges, buildScrapeProfileUrl } from '../src/lib/scraper.js';
 import { getNextTargetPlan, loadSyllabus } from '../src/lib/planner.js';
 
@@ -132,6 +132,12 @@ savePublicProfileUrl('  https://www.skills.google/public_profiles/example  ');
 assert.equal(loadPublicProfileUrl(), 'https://www.skills.google/public_profiles/example');
 savePublicProfileUrl('');
 assert.equal(loadPublicProfileUrl(), null);
+
+assert.equal(loadBonusMilestone(), false);
+saveBonusMilestone(true);
+assert.equal(loadBonusMilestone(), true);
+clearBonusMilestone();
+assert.equal(loadBonusMilestone(), false);
 
 const storedProfile = {
   arcade_games_completed: 2,

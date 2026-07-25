@@ -2,7 +2,7 @@ import { useState, useEffect } from 'preact/hooks';
 import { calculateProgress } from '../lib/calculator';
 import { loadSyllabus } from '../lib/planner';
 import { scrapePublicProfile } from '../lib/scraper';
-import { loadPublicProfileUrl, savePublicProfileUrl, loadScrapedProfile, saveScrapedProfile, clearScrapedProfile } from '../lib/storage';
+import { loadPublicProfileUrl, savePublicProfileUrl, loadScrapedProfile, saveScrapedProfile, clearScrapedProfile, loadBonusMilestone, saveBonusMilestone, clearBonusMilestone } from '../lib/storage';
 import type { CalculatorResult } from '../lib/calculator';
 import type { ScrapedProfile, SyllabusAssertions } from '../lib/types';
 import InputPanel from './InputPanel';
@@ -23,6 +23,7 @@ export default function CalculatorIsland() {
   useEffect(() => {
     // Load syllabus data
     loadSyllabus().then(setSyllabus);
+    setBonusMilestone(loadBonusMilestone());
     
     // Load saved URL
     const savedUrl = loadPublicProfileUrl();
@@ -60,10 +61,16 @@ export default function CalculatorIsland() {
     setPublicProfileUrl('');
     savePublicProfileUrl('');
     clearScrapedProfile();
+    clearBonusMilestone();
     setScrapeResult(null);
     setArcadeGames(0);
     setSkillBadges(0);
     setStorageStatus('URL belum diisi. Jika diisi, URL akan disimpan sementara di browser ini.');
+  };
+
+  const handleBonusMilestoneChange = (checked: boolean) => {
+    setBonusMilestone(checked);
+    saveBonusMilestone(checked);
   };
 
   const handleScrape = async () => {
@@ -105,7 +112,7 @@ export default function CalculatorIsland() {
         onScrape={handleScrape}
         onArcadeGamesChange={setArcadeGames}
         onSkillBadgesChange={setSkillBadges}
-        onBonusMilestoneChange={setBonusMilestone}
+        onBonusMilestoneChange={handleBonusMilestoneChange}
       />
       <OutputPanel result={result} />
       {syllabus && (
