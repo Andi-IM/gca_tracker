@@ -72,6 +72,7 @@ def scrape_profile_html(html: str, syllabus: dict | None = None) -> dict:
     return {
         "arcade_games_completed": len(arcade_game_matches),
         "skill_badges_completed": skill_badge_count,
+        "completed_skill_badges": completed_skill_badges,
         "matched_arcade_games": arcade_game_matches,
         "completed_arcade_games": [game for game in target_arcade_games if game.get("completed")],
         "missing_arcade_games": [game for game in target_arcade_games if not game.get("completed")],
@@ -115,6 +116,7 @@ def scrape_profile_url(profile_url: str) -> dict:
         "scraped_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "arcade_games_completed": parsed["arcade_games_completed"],
         "skill_badges_completed": parsed["skill_badges_completed"],
+        "completed_skill_badges": parsed["completed_skill_badges"],
         "matched_arcade_games": [
             {
                 "id": game.get("id"),

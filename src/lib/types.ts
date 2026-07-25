@@ -18,6 +18,13 @@ export interface SkillBadge {
   completed?: boolean;
 }
 
+export interface CompletedSkillBadge {
+  name: string;
+  earned_at_label: string;
+  url: string | null;
+  official_id?: string;
+}
+
 export interface SyllabusAssertions {
   source: {
     title: string;
@@ -53,6 +60,7 @@ export interface SyllabusAssertions {
 export interface ScrapedProfile {
   arcade_games_completed: number;
   skill_badges_completed: number;
+  completed_skill_badges: CompletedSkillBadge[];
   matched_arcade_games: ArcadeGame[];
   completed_arcade_games: ArcadeGame[];
   missing_arcade_games: ArcadeGame[];

@@ -71,6 +71,21 @@ function renderCompletedSkillBadge(badge: SkillBadge) {
   );
 }
 
+function renderReceivedSkillBadge(badge: NonNullable<ScrapedProfile['completed_skill_badges']>[number]) {
+  return (
+    <li key={`${badge.name}-${badge.earned_at_label}`}>
+      <div>
+        <strong>{badge.name}</strong>
+        <span>{badge.earned_at_label}{badge.official_id ? ` - Cocok dengan silabus` : ' - Badge profil'}</span>
+      </div>
+      <span class="target-status done" aria-label="Badge diterima">
+        <span aria-hidden="true">OK</span>
+        Diterima
+      </span>
+    </li>
+  );
+}
+
 function renderSkillTargetGroups(missingTargets: SkillBadge[]) {
   const levels = ['beginner', 'intermediate', 'advanced'] as const;
   const levelLabels: Record<string, string> = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' };
@@ -248,6 +263,17 @@ export default function TargetPanel({ syllabus, result, scrapeResult, arcadeGame
                 {hasActiveFilters && <button type="button" onClick={resetFilters}>Reset filter</button>}
               </div>
             )}
+        </section>
+        <section class="received-targets">
+          <h3>Badge Diterima dari Profil <span class="section-count">{scrapeResult?.completed_skill_badges.length || 0}</span></h3>
+          {scrapeResult?.completed_skill_badges.length ? (
+            <ul class="target-list">{scrapeResult.completed_skill_badges.map(renderReceivedSkillBadge)}</ul>
+          ) : (
+            <div class="target-empty-state">
+              <strong>Belum ada hasil scraping profil</strong>
+              <span>Jalankan baca profil untuk menyimpan daftar badge yang diterima.</span>
+            </div>
+          )}
         </section>
       </div>
 

@@ -558,6 +558,10 @@ input[readonly] {
   grid-column: 1 / -1;
 }
 
+.received-targets {
+  grid-column: 1 / -1;
+}
+
 .target-list {
   display: grid;
   gap: 8px;

@@ -1,10 +1,10 @@
 import { normalizeText, normalizeTitle, decodeHtml, escapeRegExp } from './utils';
 import { getOfficialSkillBadges, skillBadgeNamesMatch, buildArcadeGameTargets, buildSkillBadgeTargets } from './planner';
-import type { ArcadeGame, SkillBadge, SyllabusAssertions, ScrapedProfile } from './types';
+import type { ArcadeGame, SkillBadge, SyllabusAssertions, ScrapedProfile, CompletedSkillBadge } from './types';
 
 const SKILL_BADGE_TEXT_PATTERN = /\b(skill badge|badge keahlian|completion badge|completed badge|google cloud skill badge)\b/i;
 
-export function extractEarnedBadges(html: string): { name: string; earned_at_label: string; url: string | null }[] {
+export function extractEarnedBadges(html: string): CompletedSkillBadge[] {
   const lines = html
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
@@ -44,7 +44,7 @@ function dedupeByName<T extends { name: string }>(items: T[]): T[] {
   });
 }
 
-function enrichCompletedSkillBadges(badges: { name: string; earned_at_label: string; url: string | null }[], officialBadges: SkillBadge[]) {
+function enrichCompletedSkillBadges(badges: CompletedSkillBadge[], officialBadges: SkillBadge[]): CompletedSkillBadge[] {
   return badges.map((badge) => {
     const matchedBadge = officialBadges.find((officialBadge) => skillBadgeNamesMatch(officialBadge, badge.name));
     return matchedBadge ? { ...badge, official_id: matchedBadge.id } : badge;
@@ -90,6 +90,7 @@ export function scrapeProfileHtml(html: string, syllabus: SyllabusAssertions): S
   return {
     arcade_games_completed: arcadeGameMatches.length,
     skill_badges_completed: skillBadgeCount,
+    completed_skill_badges: completedSkillBadges,
     matched_arcade_games: arcadeGameMatches,
     completed_arcade_games: targetArcadeGames.filter((game) => game.completed),
     missing_arcade_games: targetArcadeGames.filter((game) => !game.completed),

@@ -27,9 +27,12 @@ def test_scrape_profile_html_counts_targets():
         <main>
           <a href="https://www.skills.google/games/7314">Low Code</a>
           <a href="https://www.skills.google/games/7315">Bucket</a>
-          <article>Skill Badge: Build a Data Warehouse</article>
-          <article>Skill Badge: Set Up an App Dev Environment</article>
-          <article>Badge Keahlian: Cloud Run Functions</article>
+          <article>Build a Data Warehouse</article>
+          <div>Earned Jul 21, 2026 WIB</div>
+          <article>Set Up an App Dev Environment</article>
+          <div>Earned Jul 22, 2026 WIB</div>
+          <article>Cloud Run Functions</article>
+          <div>Earned Jul 23, 2026 WIB</div>
         </main>
         """,
         SYLLABUS,
@@ -37,6 +40,11 @@ def test_scrape_profile_html_counts_targets():
 
     assert scraped["arcade_games_completed"] == 2
     assert scraped["skill_badges_completed"] == 3
+    assert [badge["name"] for badge in scraped["completed_skill_badges"]] == [
+        "Build a Data Warehouse",
+        "Set Up an App Dev Environment",
+        "Cloud Run Functions",
+    ]
     assert len(scraped["target_arcade_games"]) == 6
     assert len(scraped["skill_badge_targets"]) == 51
     assert len(scraped["completed_arcade_games"]) == 2

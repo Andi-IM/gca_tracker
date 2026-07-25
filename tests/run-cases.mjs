@@ -136,6 +136,7 @@ assert.equal(loadPublicProfileUrl(), null);
 const storedProfile = {
   arcade_games_completed: 2,
   skill_badges_completed: 4,
+  completed_skill_badges: [],
   matched_arcade_games: [],
   completed_arcade_games: [],
   missing_arcade_games: [],
@@ -226,7 +227,7 @@ const unmatchedEarnedSample = scrapeProfileHtml(`
   Earned Jul 21, 2026 WIB
 `, syllabusAssertions);
 assert.equal(unmatchedEarnedSample.skill_badges_completed, 1);
-assert.equal(Object.hasOwn(unmatchedEarnedSample, 'completed_skill_badges'), false);
+assert.deepEqual(unmatchedEarnedSample.completed_skill_badges.map((badge) => badge.name), ['Build a Data Warehouse with BigQuery']);
 assert.equal(unmatchedEarnedSample.completed_skill_badge_targets.length, 0);
 assert.equal(unmatchedEarnedSample.missing_skill_badge_targets.length, 51);
 
@@ -235,7 +236,7 @@ const matchedEarnedSample = scrapeProfileHtml(`
   Earned Jul 21, 2026 WIB
 `, syllabusAssertions);
 assert.equal(matchedEarnedSample.skill_badges_completed, 1);
-assert.equal(Object.hasOwn(matchedEarnedSample, 'completed_skill_badges'), false);
+assert.deepEqual(matchedEarnedSample.completed_skill_badges.map((badge) => badge.name), ['Build Global and Regional Load Balancing Solutions']);
 assert.deepEqual(
   matchedEarnedSample.completed_skill_badge_targets.map((badge) => badge.name),
   ['Build Global and Regional Load Balancing Solutions']
@@ -252,7 +253,7 @@ const scrapedSample = scrapeProfileHtml(`
 `, syllabusAssertions);
 assert.equal(scrapedSample.arcade_games_completed, 2);
 assert.equal(scrapedSample.skill_badges_completed, 3);
-assert.equal(Object.hasOwn(scrapedSample, 'completed_skill_badges'), false);
+assert.equal(scrapedSample.completed_skill_badges.length, 0);
 assert.equal(scrapedSample.target_arcade_games.length, 6);
 assert.equal(scrapedSample.skill_badge_targets.length, 51);
 assert.equal(scrapedSample.completed_arcade_games.length, 2);

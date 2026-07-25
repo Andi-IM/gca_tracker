@@ -26,6 +26,7 @@ function isScrapedProfile(value: unknown): value is ScrapedProfile {
   const profile = value as Partial<ScrapedProfile>;
   return typeof profile.arcade_games_completed === 'number'
     && typeof profile.skill_badges_completed === 'number'
+    && Array.isArray(profile.completed_skill_badges)
     && Array.isArray(profile.matched_arcade_games)
     && Array.isArray(profile.completed_arcade_games)
     && Array.isArray(profile.missing_arcade_games)
