@@ -104,6 +104,14 @@ Deploy the `api/` directory as a standalone service:
 
 See [edgeone-deployment.md](file:///D:/01_Projects/arcade-tracker/docs/edgeone-deployment.md) for Tencent Cloud EdgeOne hybrid deployment instructions, and `api/README.md` for general standalone API deployment.
 
+Quick EdgeOne CLI deployment:
+
+```powershell
+$env:PUBLIC_API_URL = "https://api.domain-anda.com"
+npm run build
+npx edgeone makers deploy dist --name arcade-tracker --env production --area global
+```
+
 ## Testing
 
 Run the test suite:

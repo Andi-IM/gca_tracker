@@ -49,19 +49,31 @@ Setelah berhasil, uji API Anda melalui browser: `http://<IP-SERVER-ANDA>:3001/ap
 
 ---
 
-## Langkah 2: Deploy Frontend ke EdgeOne Pages
+## Langkah 2: Deploy Frontend ke EdgeOne melalui CLI
 
-1. Masuk ke konsol **Tencent Cloud EdgeOne**.
-2. Pilih menu **EdgeOne Makers** > **Pages** > **Create Project**.
-3. Hubungkan repositori GitHub Anda.
-4. Konfigurasikan build settings untuk Astro:
-   * **Framework Preset:** `Astro` (atau pilih `Create React App / Static` jika tidak ada, kemudian sesuaikan command-nya).
-   * **Build Command:** `npm run build`
-   * **Output Directory:** `dist`
-5. Tambahkan **Environment Variable** di pengaturan build EdgeOne Pages:
-   * Nama: `PUBLIC_API_URL`
-   * Nilai: `http://<IP-SERVER-ANDA-ATAU-DOMAIN-API>:3001` (tanpa slash di akhir).
-6. Klik **Save and Deploy**.
+CLI EdgeOne melakukan direct upload terhadap folder `dist/`. Jalankan dari
+root repositori:
+
+```powershell
+npx edgeone whoami
+$env:PUBLIC_API_URL = "https://api.domain-anda.com"
+npm run build
+npx edgeone makers deploy dist --name arcade-tracker --env production --area global
+```
+
+Untuk Linux/macOS, gunakan `export PUBLIC_API_URL=...` sebagai pengganti
+`$env:PUBLIC_API_URL`. Nilai `PUBLIC_API_URL` dibaca saat build Astro, sehingga
+harus diset sebelum `npm run build`.
+
+Untuk deployment CI/CD tanpa login interaktif, gunakan token EdgeOne:
+
+```bash
+npx edgeone makers deploy dist \
+  --name arcade-tracker \
+  --env production \
+  --area global \
+  --token "$EDGEONE_API_TOKEN"
+```
 
 Gunakan URL HTTPS untuk `PUBLIC_API_URL` pada production. Jika backend masih
 berjalan pada port `3001`, arahkan domain API atau reverse proxy HTTPS ke port
