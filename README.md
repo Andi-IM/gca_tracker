@@ -1,89 +1,123 @@
-# Arcade Tracker
+# Google Cloud Arcade Tracker
 
-Kalkulator satu halaman untuk membaca profil publik Google Skills, menghitung progres, dan menampilkan target milestone Google Skills Arcade Fasilitator.
+A milestone progress calculator for Google Skills Arcade Fasilitator participants.
 
-## Getting Started
+## Project Structure
 
-Jalankan aplikasi dari satu entrypoint:
+```text
+/
+├── api/                          # Backend API (separate deployment)
+│   ├── server.js                 # Express server with scraping endpoint
+│   ├── scraper.js                # Playwright-based profile scraper
+│   ├── utils.js                  # Utility functions
+│   └── planner.js                # Target planning logic
+├── data/
+│   └── syllabus-assertions.json  # Syllabus data
+├── public/
+│   └── data/                     # Static data for client
+├── src/
+│   ├── components/               # Preact components
+│   │   ├── CalculatorIsland.tsx  # Main calculator wrapper
+│   │   ├── InputPanel.tsx        # Form inputs
+│   │   ├── OutputPanel.tsx       # Results display
+│   │   └── TargetPanel.tsx       # Target lists
+│   ├── layouts/
+│   │   └── BaseLayout.astro      # Base HTML layout
+│   ├── lib/                      # TypeScript modules
+│   │   ├── calculator.ts         # Score calculations
+│   │   ├── milestones.ts         # Milestone data
+│   │   ├── planner.ts            # Target planning
+│   │   ├── scraper.ts            # Client-side scraping
+│   │   ├── storage.ts            # LocalStorage helpers
+│   │   ├── types.ts              # TypeScript interfaces
+│   │   └── utils.ts              # Utility functions
+│   ├── pages/
+│   │   └── index.astro           # Main page
+│   └── styles/
+│       └── global.css            # Global styles
+├── tests/
+│   └── run-cases.mjs             # Test suite
+└── docs/
+    └── astro-migration-plan.md   # Migration documentation
+```
+
+## Commands
+
+### Frontend (Astro)
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Install dependencies                            |
+| `npm run dev`             | Start dev server at `localhost:4321`            |
+| `npm run build`           | Build production site to `./dist/`              |
+| `npm run preview`         | Preview build locally                           |
+| `npm test`                | Run test suite                                  |
+
+### Backend API
 
 ```bash
+cd api
 npm install
-npm start
-```
-
-Lalu buka:
-
-```text
-http://127.0.0.1:5199
-```
-
-Jika port `5199` sudah dipakai:
-
-```bash
-PORT=5200 npm start
-```
-
-Di PowerShell:
-
-```powershell
-$env:PORT=5200
-npm start
-```
-
-## Cara Pakai
-
-1. Buka `http://127.0.0.1:5199`.
-2. Masukkan URL publik Skills Google.
-3. Klik `Baca Profil`.
-4. Aplikasi akan menampilkan progres, poin, milestone, badge selesai, dan target badge yang perlu dikerjakan.
-
-URL publik disimpan sementara di `localStorage` browser. Nilai Arcade Games dan Badge Keahlian tidak diisi manual; nilainya dibaca dari profil publik melalui endpoint scraper lokal.
-
-## Scrape Profil Publik
-
-Tombol `Baca Profil` memakai endpoint Playwright di server yang sama:
-
-```text
-GET /api/scrape?url=<url-profil-publik>
-```
-
-Jadi aplikasi harus dijalankan dengan:
-
-```bash
-npm start
-```
-
-Setelah profil terbaca, aplikasi menampilkan:
-
-- daftar Arcade Games Juli yang sudah selesai dan yang perlu dikerjakan,
-- daftar Badge Keahlian dari silabus resmi yang sudah cocok sebagai selesai,
-- daftar Badge Keahlian dari silabus resmi yang belum selesai dengan tautan langsung ke lab Skills Google,
-- jumlah kekurangan game dan badge menuju milestone berikutnya.
-
-Jika Playwright belum punya browser lokal:
-
-```bash
 npx playwright install chromium
+npm start                    # Start API server at localhost:3001
 ```
 
-## Core Docs
+## Development
 
-AI and implementation guidance lives in `docs/ai/`. Start with:
+1. Install dependencies:
+   ```bash
+   npm install
+   cd api && npm install && cd ..
+   ```
 
-- `docs/ai/PROJECT_BRIEF.md`
-- `docs/ai/IMPLEMENTATION_PLAN.md`
-- `docs/ai/PROGRESS_LEDGER.md`
+2. Install Playwright browsers (for API):
+   ```bash
+   npx playwright install chromium
+   ```
 
-## Verification
+3. Start development server:
+   ```bash
+   npm run dev
+   ```
 
+4. (Optional) Start API server:
+   ```bash
+   cd api && npm start
+   ```
+
+## Architecture
+
+- **Frontend**: Astro static site with Preact islands for interactivity
+- **Backend**: Separate Node.js API for profile scraping (deploy independently)
+- **Data**: Syllabus assertions in JSON format
+
+## Deployment
+
+### Frontend
+Deploy the `dist/` folder to any static hosting:
+- Vercel
+- Netlify
+- GitHub Pages
+- Cloudflare Pages
+
+### Backend API
+Deploy the `api/` directory as a standalone service:
+- Vercel Functions
+- Railway
+- Render
+- Fly.io
+
+See `api/README.md` for detailed deployment instructions.
+
+## Testing
+
+Run the test suite:
 ```bash
 npm test
 ```
 
-Aplikasi tidak memakai database atau framework frontend. Server lokal hanya melayani halaman app dan endpoint scraper Playwright dalam satu proses. `localStorage` hanya dipakai untuk menyimpan sementara URL publik Skills Google di browser pengguna. Semua aturan milestone ada di `app.js`.
-
-Data asersi silabus untuk kebutuhan scraping URL publik disimpan di `data/syllabus-assertions.json`. Enam Arcade Games di fixture tersebut adalah rilis Juli 2026 saja; badge game bulan Agustus dan bulan berikutnya harus dicatat sebagai rilis terpisah. Fixture juga memuat 51 placeholder Badge Keahlian dengan status `completed: false`.
-
-Jumlah Arcade Games dan Badge Keahlian di form ditujukan untuk diisi dari tombol `Baca Profil`, bukan dihitung manual.
-
-Periode program yang dipakai aplikasi: 13 Juli 2026 10:00 WIB sampai 14 September 2026 23:59 WIB. Nama dan URL Skill Badge di fixture diambil dari halaman Silabus resmi RSVP Google Skills Arcade Fasilitator 2026.
+Tests verify:
+- Milestone calculations
+- Score computations
+- Profile scraping logic
+- Data integrity

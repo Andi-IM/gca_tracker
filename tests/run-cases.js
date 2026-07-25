@@ -187,7 +187,7 @@ assert.deepEqual(
 );
 assert.deepEqual(
   scrapedSample.target_arcade_games.filter((game) => !game.completed).map((game) => game.name).sort(),
-  ["Basecamp", "Data Mesh", "Security", "Workspace"]
+  ["Arcade Trail: Google Workspace Administration", "Basecamp", "Data Mesh", "Security"]
 );
 assert.deepEqual(
   scrapedSample.skill_badge_targets.slice(0, 3).map((badge) => badge.completed),
@@ -237,7 +237,14 @@ assert.ok(syllabusAssertions.arcade_games.every((game) => game.release_month ===
 assert.ok(syllabusAssertions.arcade_games.every((game) => game.url.includes(`games/${game.id}`)));
 assert.deepEqual(
   syllabusAssertions.arcade_games.map((game) => game.name).sort(),
-  ["Basecamp", "Bucket", "Data Mesh", "Low Code", "Security", "Workspace"]
+  [
+    "Arcade Adventure: Low-Code Development",
+    "Arcade Trail: Google Workspace Administration",
+    "Arcade Voyage: Cloud Storage and Data Governance",
+    "Basecamp",
+    "Data Mesh",
+    "Security"
+  ]
 );
 assert.equal(syllabusAssertions.meta.listed_skill_badges_total, 51);
 assert.equal(syllabusAssertions.meta.additional_badges_needed_for_ultimate, 15);
