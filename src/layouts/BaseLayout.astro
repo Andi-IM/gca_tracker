@@ -4,6 +4,8 @@ export interface Props {
   description?: string;
 }
 
+import '../styles/global.css';
+
 const { title, description = 'Hitung progres Arcade Games, Badge Keahlian, Bonus Points, dan milestone tertinggi berdasarkan aturan Sistem Poin.' } = Astro.props;
 ---
 
@@ -15,7 +17,6 @@ const { title, description = 'Hitung progres Arcade Games, Badge Keahlian, Bonus
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
     <slot />

@@ -45,7 +45,7 @@ export default function InputPanel({
       <div class="url-actions">
         <p id="url-storage-status">{storageStatus}</p>
         <div class="button-row">
-          <button type="button" onClick={onScrape} disabled={isLoading}>
+          <button id="scrape-profile" type="button" onClick={onScrape} disabled={isLoading}>
             {isLoading ? 'Membaca...' : 'Baca Profil'}
           </button>
           <button type="button" onClick={onClearUrl}>

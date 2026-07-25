@@ -1,4 +1,4 @@
-{
+window.SYLLABUS_ASSERTIONS = {
   "source": {
     "title": "Silabus",
     "program": "Google Skills Arcade Fasilitator 2026",
@@ -461,4 +461,4 @@
     "note": "Nama dan URL badge individual diambil dari halaman Silabus resmi RSVP Google Skills Arcade Fasilitator 2026 pada 2026-07-24. Arcade Games yang tercantum adalah rilis Juli 2026; bulan Agustus dan bulan berikutnya perlu fixture rilis tersendiri.",
     "skill_badge_source_url": "https://rsvp.withgoogle.com/events/arcade-fasilitator-id/silabus"
   }
-}
+};
