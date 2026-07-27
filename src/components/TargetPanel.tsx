@@ -1,5 +1,6 @@
 import type { CalculatorResult } from '../lib/calculator';
 import type { ScrapedProfile, SyllabusAssertions, ArcadeGame, SkillBadge } from '../lib/types';
+import type { ComponentChildren } from 'preact';
 import { getNextTargetPlan } from '../lib/planner';
 import { getProgramStatus } from '../lib/calculator';
 import { useState } from 'preact/hooks';
@@ -13,6 +14,32 @@ interface TargetPanelProps {
 }
 
 type TargetStatusFilter = 'all' | 'todo' | 'done';
+
+interface TargetAccordionProps {
+  title: string;
+  count: number;
+  description: string;
+  defaultOpen?: boolean;
+  className?: string;
+  children: ComponentChildren;
+}
+
+function TargetAccordion({ title, count, description, defaultOpen = false, className = '', children }: TargetAccordionProps) {
+  return (
+    <details class={`target-accordion ${className}`} open={defaultOpen}>
+      <summary>
+        <span>
+          <strong>{title}</strong>
+          <small>{description}</small>
+        </span>
+        <span class="section-count" aria-label={`${count} item`}>{count}</span>
+      </summary>
+      <div class="target-accordion-body">
+        {children}
+      </div>
+    </details>
+  );
+}
 
 function renderTargetLink(url: string | undefined | null, label: string) {
   if (!url) return <span class="target-link missing">Link belum tersedia</span>;
@@ -236,19 +263,32 @@ export default function TargetPanel({ syllabus, result, scrapeResult, arcadeGame
         </div>
       )}
 
-      <div class="target-grid" aria-live="polite">
-        <section>
-          <h3>Arcade Games Juli 2026 <span class="section-count">{filteredArcadeTargets.length}</span></h3>
+      <div class="target-grid target-accordion-list" aria-live="polite">
+        <TargetAccordion
+          title="Arcade Games Juli 2026"
+          count={filteredArcadeTargets.length}
+          description="Target game resmi bulan ini."
+          defaultOpen={filteredArcadeTargets.some((target) => !target.completed)}
+        >
           <ul class="target-list">
             {filteredArcadeTargets.map(renderArcadeTarget)}
           </ul>
-        </section>
-        <section>
-          <h3>Badge Belum Selesai <span class="section-count">{filteredMissingSkillTargets.length}</span></h3>
+        </TargetAccordion>
+        <TargetAccordion
+          title="Badge Belum Selesai"
+          count={filteredMissingSkillTargets.length}
+          description="Buka saat ingin memilih badge berikutnya dari silabus resmi."
+          defaultOpen={hasActiveFilters && filteredMissingSkillTargets.length > 0}
+        >
           {renderSkillTargetGroups(filteredMissingSkillTargets)}
-        </section>
-        <section class="completed-targets">
-          <h3>Badge Selesai <span class="section-count">{filteredCompletedSkillTargets.length}</span></h3>
+        </TargetAccordion>
+        <TargetAccordion
+          title="Badge Selesai"
+          count={filteredCompletedSkillTargets.length}
+          description="Buka jika ingin memeriksa badge silabus yang sudah cocok."
+          defaultOpen={hasActiveFilters && filteredCompletedSkillTargets.length > 0}
+          className="completed-targets"
+        >
           {filteredCompletedSkillTargets.length > 0 && (
             <p id="completed-skill-summary">
               {filteredCompletedSkillTargets.length} dari {plan.skillTargets.length} badge ditandai selesai.
@@ -263,9 +303,13 @@ export default function TargetPanel({ syllabus, result, scrapeResult, arcadeGame
                 {hasActiveFilters && <button type="button" onClick={resetFilters}>Reset filter</button>}
               </div>
             )}
-        </section>
-        <section class="received-targets">
-          <h3>Badge Diterima dari Profil <span class="section-count">{scrapeResult?.completed_skill_badges.length || 0}</span></h3>
+        </TargetAccordion>
+        <TargetAccordion
+          title="Badge Diterima dari Profil"
+          count={scrapeResult?.completed_skill_badges.length || 0}
+          description="Data mentah dari profil publik, dipisahkan dari daftar silabus resmi."
+          className="received-targets"
+        >
           {scrapeResult?.completed_skill_badges.length ? (
             <ul class="target-list">{scrapeResult.completed_skill_badges.map(renderReceivedSkillBadge)}</ul>
           ) : (
@@ -274,7 +318,7 @@ export default function TargetPanel({ syllabus, result, scrapeResult, arcadeGame
               <span>Jalankan baca profil untuk menyimpan daftar badge yang diterima.</span>
             </div>
           )}
-        </section>
+        </TargetAccordion>
       </div>
 
       {!hasFilteredTargets && (

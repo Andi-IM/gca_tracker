@@ -11,7 +11,7 @@ import { calculateProgress, findHighestMilestone, getNextMilestone, getProgramSt
 import { PUBLIC_PROFILE_URL_STORAGE_KEY, SCRAPED_PROFILE_STORAGE_KEY, MILESTONES } from '../src/lib/milestones.js';
 import { loadPublicProfileUrl, savePublicProfileUrl, loadScrapedProfile, saveScrapedProfile, clearScrapedProfile, loadBonusMilestone, saveBonusMilestone, clearBonusMilestone } from '../src/lib/storage.js';
 import { scrapeProfileHtml, extractEarnedBadges, buildScrapeProfileUrl } from '../src/lib/scraper.js';
-import { getNextTargetPlan, loadSyllabus } from '../src/lib/planner.js';
+import { getNextTargetPlan } from '../src/lib/planner.js';
 
 // Load syllabus data
 const syllabusPath = path.join(__dirname, '..', 'data', 'syllabus-assertions.json');

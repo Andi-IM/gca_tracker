@@ -23,30 +23,77 @@ colors:
   done-text: "#137333"
   todo-bg: "#fff1cc"
   todo-text: "#8a5a00"
+  priority-border: "#d2e3fc"
 typography:
   display:
-    fontFamily: "Arial, Helvetica, sans-serif"
+    fontFamily: "Aptos, Segoe UI, sans-serif"
     fontSize: "clamp(34px, 5vw, 58px)"
     fontWeight: 700
     lineHeight: 1.02
     letterSpacing: "0"
+  hero:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "50px"
+    fontWeight: 700
+    lineHeight: 1.08
+  resultTotal:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "48px"
+    fontWeight: 800
+    lineHeight: 1
+  compactTotal:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "40px"
+    fontWeight: 800
+    lineHeight: 1
+  compactDisplay:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "34px"
+    fontWeight: 700
+    lineHeight: 1.08
+  metric:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "26px"
+    fontWeight: 700
+    lineHeight: 1
   headline:
-    fontFamily: "Arial, Helvetica, sans-serif"
+    fontFamily: "Aptos, Segoe UI, sans-serif"
     fontSize: "22px"
     fontWeight: 700
+  badge:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "18px"
+    fontWeight: 800
+    lineHeight: 1
+  intro:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "17px"
+    lineHeight: 1.5
   title:
-    fontFamily: "Arial, Helvetica, sans-serif"
+    fontFamily: "Aptos, Segoe UI, sans-serif"
     fontSize: "15px"
     fontWeight: 700
   body:
-    fontFamily: "Arial, Helvetica, sans-serif"
+    fontFamily: "Aptos, Segoe UI, sans-serif"
     fontSize: "14px"
     lineHeight: 1.55
   label:
-    fontFamily: "Arial, Helvetica, sans-serif"
+    fontFamily: "Aptos, Segoe UI, sans-serif"
     fontSize: "13px"
     fontWeight: 700
     letterSpacing: "0"
+  caption:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "12px"
+    fontWeight: 700
+  count:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "11px"
+    fontWeight: 800
+  micro:
+    fontFamily: "Aptos, Segoe UI, sans-serif"
+    fontSize: "10px"
+    fontWeight: 700
 rounded:
   sm: "6px"
   md: "8px"
@@ -142,18 +189,19 @@ The palette is a functional Google-inspired utility palette: blue leads interact
 
 ## Typography
 
-**Display Font:** Arial with Helvetica and sans-serif fallback.
-**Body Font:** Arial with Helvetica and sans-serif fallback.
-**Label Font:** Arial with Helvetica and sans-serif fallback.
+**Display Font:** Aptos with Segoe UI and sans-serif fallback.
+**Body Font:** Aptos with Segoe UI and sans-serif fallback.
+**Label Font:** Aptos with Segoe UI and sans-serif fallback.
 
 **Character:** The typography is utilitarian and browser-native. It favors short labels, strong numeric readouts, and compact headings over editorial flourish.
 
 ### Hierarchy
-- **Display** (700, responsive clamp, 1.02 line-height): Hero title only.
+- **Display** (700, responsive clamp or 50px desktop / 34px compact, 1.02-1.08 line-height): Hero title only.
 - **Headline** (700, 22px): Panel and section headings.
 - **Title** (700, 15px): Status box and subsection headings.
 - **Body** (14px to 17px, 1.5-1.65 line-height): Intro copy, notes, descriptions, and status messages.
-- **Label** (700 to 800, 12px to 14px, no letter spacing except uppercase table headings): Field labels, chips, table headers, links, and small controls.
+- **Label / Caption / Count** (700 to 800, 10px to 14px, no letter spacing except uppercase table headings): Field labels, chips, table headers, links, counts, and compact controls.
+- **Metric** (26px, 40px, 48px): Numeric result emphasis inside result panels only.
 
 ### Named Rules
 

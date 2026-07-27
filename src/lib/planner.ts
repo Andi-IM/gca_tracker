@@ -7,18 +7,9 @@ let syllabusData: SyllabusAssertions | null = null;
 
 export async function loadSyllabus(): Promise<SyllabusAssertions> {
   if (syllabusData) return syllabusData;
-  
-  // In browser, fetch from public directory
-  if (typeof window !== 'undefined') {
-    const response = await fetch('/data/syllabus-assertions.json');
-    syllabusData = await response.json();
-  } else {
-    // In Node.js (for tests)
-    const fs = await import('fs');
-    const path = await import('path');
-    const dataPath = path.join(process.cwd(), 'data', 'syllabus-assertions.json');
-    syllabusData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-  }
+
+  const response = await fetch('/data/syllabus-assertions.json');
+  syllabusData = await response.json();
   
   return syllabusData!;
 }
