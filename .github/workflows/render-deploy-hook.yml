@@ -1,0 +1,37 @@
+name: Trigger Render API Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: Reason for triggering the Render deploy
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    name: Call Render deploy hook
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Validate deploy hook secret
+        env:
+          RENDER_API_DEPLOY_HOOK_URL: ${{ secrets.RENDER_API_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_API_DEPLOY_HOOK_URL" ]; then
+            echo "Missing GitHub secret: RENDER_API_DEPLOY_HOOK_URL"
+            exit 1
+          fi
+
+      - name: Trigger Render API deploy
+        env:
+          RENDER_API_DEPLOY_HOOK_URL: ${{ secrets.RENDER_API_DEPLOY_HOOK_URL }}
+          DEPLOY_REASON: ${{ inputs.reason }}
+        run: |
+          echo "Triggering Render API deploy..."
+          if [ -n "$DEPLOY_REASON" ]; then
+            echo "Reason: $DEPLOY_REASON"
+          fi
+          curl --fail --show-error --silent --request POST "$RENDER_API_DEPLOY_HOOK_URL"
+          echo "Render deploy hook accepted."
