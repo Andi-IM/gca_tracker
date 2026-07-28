@@ -111,3 +111,72 @@ jobs:
           labels: ${{ steps.api-meta.outputs.labels }}
           cache-from: type=gha,scope=api
           cache-to: type=gha,mode=max,scope=api
+
+  deploy-api:
+    name: Deploy Render API
+    needs: publish
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Validate deploy hook configuration
+        env:
+          RENDER_DEPLOY_URL: ${{ vars.RENDER_DEPLOY_URL }}
+          RENDER_DEPLOY_KEY: ${{ secrets.RENDER_DEPLOY_KEY }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_URL" ]; then
+            echo "Missing GitHub variable: RENDER_DEPLOY_URL"
+            exit 1
+          fi
+          if [ -z "$RENDER_DEPLOY_KEY" ]; then
+            echo "Missing GitHub secret: RENDER_DEPLOY_KEY"
+            exit 1
+          fi
+
+      - name: Trigger Render API deploy
+        env:
+          RENDER_DEPLOY_URL: ${{ vars.RENDER_DEPLOY_URL }}
+          RENDER_DEPLOY_KEY: ${{ secrets.RENDER_DEPLOY_KEY }}
+        run: |
+          set -euo pipefail
+          encoded_key="$(python3 -c 'import os, urllib.parse; print(urllib.parse.quote(os.environ["RENDER_DEPLOY_KEY"], safe=""))')"
+          separator="?"
+          case "$RENDER_DEPLOY_URL" in
+            *\?*) separator="&" ;;
+          esac
+          response="$(curl --fail --show-error --silent --request POST "${RENDER_DEPLOY_URL}${separator}key=${encoded_key}")"
+          echo "$response"
+          echo "Render deploy hook accepted."
+
+      - name: Verify production API
+        env:
+          RENDER_PRODUCTION_API_URL: ${{ vars.RENDER_PRODUCTION_API_URL || 'https://api-sha-58a4305.onrender.com' }}
+          SMOKE_PROFILE_URL: https://www.skills.google/public_profiles/58ff4ba8-9292-4ec6-8f16-ee568499d4fb
+        run: |
+          set -euo pipefail
+          encoded_profile="$(SMOKE_PROFILE_URL="$SMOKE_PROFILE_URL" python3 -c 'import os, urllib.parse; print(urllib.parse.quote(os.environ["SMOKE_PROFILE_URL"], safe=""))')"
+          endpoint="${RENDER_PRODUCTION_API_URL%/}/api/scrape?url=${encoded_profile}"
+          echo "Waiting for Render API to serve the new image..."
+
+          for attempt in $(seq 1 30); do
+            response="$(curl --fail --show-error --silent --location "$endpoint" || true)"
+            if [ -n "$response" ]; then
+              status="$(RESPONSE="$response" python3 -c 'import json, os; data=json.loads(os.environ["RESPONSE"]); print(data.get("skill_badges_completed"))' 2>/dev/null || true)"
+              has_completed_badges="$(RESPONSE="$response" python3 -c 'import json, os; data=json.loads(os.environ["RESPONSE"]); print("completed_skill_badges" in data)' 2>/dev/null || true)"
+
+              if [ "$status" = "13" ] && [ "$has_completed_badges" = "True" ]; then
+                echo "Production API verified: Safe Spaces is not counted as a skill badge."
+                exit 0
+              fi
+
+              echo "Attempt ${attempt}/30: API not updated yet; skill_badges_completed=${status:-unknown}, completed_skill_badges field=${has_completed_badges:-unknown}."
+            else
+              echo "Attempt ${attempt}/30: API did not return a usable response."
+            fi
+
+            sleep 20
+          done
+
+          echo "Production API did not serve the expected build after deploy."
+          exit 1
