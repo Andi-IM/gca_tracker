@@ -30,8 +30,11 @@ export function extractEarnedBadges(html: string): CompletedSkillBadge[] {
   return dedupeByName(badges);
 }
 
-function isArcadeBadgeTitle(title: string): boolean {
-  return /\barcade\b/i.test(title);
+function isArcadeBadgeTitle(title: string, arcadeGames: ArcadeGame[] = []): boolean {
+  if (/\barcade\b/i.test(title)) return true;
+
+  const normalizedTitle = normalizeTitle(title);
+  return arcadeGames.some((game) => normalizeTitle(game.name) === normalizedTitle);
 }
 
 function dedupeByName<T extends { name: string }>(items: T[]): T[] {
@@ -80,7 +83,7 @@ export function scrapeProfileHtml(html: string, syllabus: SyllabusAssertions): S
   const arcadeGameMatches = findCompletedJulyArcadeGames(html, text, syllabus.arcade_games);
   const officialBadges = getOfficialSkillBadges(syllabus);
   const completedSkillBadges = enrichCompletedSkillBadges(
-    earnedBadges.filter((badge) => !isArcadeBadgeTitle(badge.name)),
+    earnedBadges.filter((badge) => !isArcadeBadgeTitle(badge.name, syllabus.arcade_games)),
     officialBadges
   );
   const skillBadgeCount = completedSkillBadges.length > 0 ? completedSkillBadges.length : countSkillBadgesFromHtml(html);

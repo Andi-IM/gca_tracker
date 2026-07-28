@@ -318,4 +318,19 @@ assert.deepEqual(
 );
 assert.equal(officialAssertionPlan.missingSkillTargets.length, 50);
 
+const safeSpacesSample = scrapeProfileHtml(`
+  <main>
+    <article>Safe Spaces</article>
+    <div>Earned Jul 24, 2026 WIB</div>
+    <article>Build a Data Warehouse with BigQuery</article>
+    <div>Earned Jul 25, 2026 WIB</div>
+  </main>
+`, syllabusAssertions);
+assert.equal(safeSpacesSample.arcade_games_completed, 1);
+assert.equal(safeSpacesSample.skill_badges_completed, 1);
+assert.deepEqual(
+  safeSpacesSample.completed_skill_badges.map((badge) => badge.name),
+  ['Build a Data Warehouse with BigQuery']
+);
+
 console.log('All milestone calculation cases passed.');

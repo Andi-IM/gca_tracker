@@ -62,7 +62,7 @@ def scrape_profile_html(html: str, syllabus: dict | None = None) -> dict:
     arcade_game_matches = _find_completed_july_arcade_games(html, text, syllabus.get("arcade_games", []))
     official_badges = get_official_skill_badges(syllabus)
     completed_skill_badges = _enrich_completed_skill_badges(
-        [badge for badge in earned_badges if not _is_arcade_badge_title(badge.get("name", ""))],
+        [badge for badge in earned_badges if not _is_arcade_badge_title(badge.get("name", ""), syllabus.get("arcade_games", []))],
         official_badges,
     )
     skill_badge_count = len(completed_skill_badges) if completed_skill_badges else _count_skill_badges_from_html(html)
@@ -142,8 +142,16 @@ def scrape_profile_url(profile_url: str) -> dict:
     }
 
 
-def _is_arcade_badge_title(title: str) -> bool:
-    return re.search(r"\barcade\b", title or "", re.IGNORECASE) is not None
+def _is_arcade_badge_title(title: str, arcade_games: list[dict] | None = None) -> bool:
+    if re.search(r"\barcade\b", title or "", re.IGNORECASE) is not None:
+        return True
+
+    normalized_title = normalize_title(title or "")
+    return normalized_title in {
+        normalize_title(game.get("name", ""))
+        for game in (arcade_games or [])
+        if game.get("name")
+    }
 
 
 def _dedupe_by_name(items: list[dict]) -> list[dict]:

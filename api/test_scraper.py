@@ -49,3 +49,21 @@ def test_scrape_profile_html_counts_targets():
     assert len(scraped["skill_badge_targets"]) == 51
     assert len(scraped["completed_arcade_games"]) == 2
     assert len(scraped["missing_arcade_games"]) == 4
+
+
+def test_scrape_profile_html_does_not_count_named_arcade_game_as_skill_badge():
+    scraped = scrape_profile_html(
+        """
+        <main>
+          <article>Safe Spaces</article>
+          <div>Earned Jul 24, 2026 WIB</div>
+          <article>Build a Data Warehouse with BigQuery</article>
+          <div>Earned Jul 25, 2026 WIB</div>
+        </main>
+        """,
+        SYLLABUS,
+    )
+
+    assert scraped["arcade_games_completed"] == 1
+    assert scraped["skill_badges_completed"] == 1
+    assert [badge["name"] for badge in scraped["completed_skill_badges"]] == ["Build a Data Warehouse with BigQuery"]
