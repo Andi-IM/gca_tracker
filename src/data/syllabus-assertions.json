@@ -66,6 +66,76 @@
       "type": "arcade_game",
       "status": "active",
       "completed": false
+    },
+    {
+      "id": 7394,
+      "name": "Arcade Base Camp August 2026",
+      "release_month": "2026-08",
+      "code": "1q-basecamp-10219",
+      "url": "https://www.skills.google/games/7394?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
+    },
+    {
+      "id": 7395,
+      "name": "Arcade Adventure: Data Vault",
+      "release_month": "2026-08",
+      "code": "1q-datamgt-92372",
+      "url": "https://www.skills.google/games/7395?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
+    },
+    {
+      "id": 7396,
+      "name": "Arcade Trail: Cloud Delivery Systems",
+      "release_month": "2026-08",
+      "code": "1q-delivery-31058",
+      "url": "https://www.skills.google/games/7396?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
+    },
+    {
+      "id": 7397,
+      "name": "Arcade Simulator: Network Security Engineer",
+      "release_month": "2026-08",
+      "code": "1q-network-51470",
+      "url": "https://www.skills.google/games/7397?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
+    },
+    {
+      "id": 7398,
+      "name": "Arcade Voyage: Google Sheets",
+      "release_month": "2026-08",
+      "code": "1q-sheets-29185",
+      "url": "https://www.skills.google/games/7398?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
+    },
+    {
+      "id": 7399,
+      "name": "Spans and Plans",
+      "release_month": "2026-08",
+      "code": "1q-schema-27083",
+      "url": "https://www.skills.google/games/7399?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
+    },
+    {
+      "id": 7426,
+      "name": "Arcade Re-Trail: Vaults & Vectors",
+      "release_month": "2026-08",
+      "code": "1q-vaults-39213",
+      "url": "https://www.skills.google/games/7426?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
     }
   ],
   "skill_badges": {
@@ -447,7 +517,15 @@
         7318,
         7317
       ],
-      "august_2026": [],
+      "august_2026": [
+        7394,
+        7395,
+        7396,
+        7397,
+        7398,
+        7399,
+        7426
+      ],
       "september_2026": []
     },
     "listed_skill_badges_total": 51,
@@ -457,8 +535,8 @@
       "advanced": 17
     },
     "additional_badges_needed_for_ultimate": 15,
-    "arcade_game_catalog_scope": "july_2026_release_only",
-    "note": "Nama dan URL badge individual diambil dari halaman Silabus resmi RSVP Google Skills Arcade Fasilitator 2026 pada 2026-07-24. Arcade Games yang tercantum adalah rilis Juli 2026; bulan Agustus dan bulan berikutnya perlu fixture rilis tersendiri.",
+    "arcade_game_catalog_scope": "july_2026_and_august_2026_release",
+    "note": "Nama dan URL badge individual diambil dari halaman Silabus resmi RSVP Google Skills Arcade Fasilitator 2026. Arcade Games yang tercantum mencakup rilis Juli 2026 (ID 7313-7318) dan Agustus 2026 (ID 7394-7399, 7426); bulan September perlu diverifikasi tersendiri. Data Agustus diperbarui pada 2026-08-19.",
     "skill_badge_source_url": "https://rsvp.withgoogle.com/events/arcade-fasilitator-id/silabus"
   }
 }
