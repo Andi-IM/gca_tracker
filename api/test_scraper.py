@@ -45,10 +45,10 @@ def test_scrape_profile_html_counts_targets():
         "Set Up an App Dev Environment",
         "Cloud Run Functions",
     ]
-    assert len(scraped["target_arcade_games"]) == 6
+    assert len(scraped["target_arcade_games"]) == 13
     assert len(scraped["skill_badge_targets"]) == 51
     assert len(scraped["completed_arcade_games"]) == 2
-    assert len(scraped["missing_arcade_games"]) == 4
+    assert len(scraped["missing_arcade_games"]) == 11
 
 
 def test_scrape_profile_html_does_not_count_named_arcade_game_as_skill_badge():

@@ -62,15 +62,16 @@ jobs:
           for attempt in $(seq 1 30); do
             response="$(curl --fail --show-error --silent --location "$endpoint" || true)"
             if [ -n "$response" ]; then
-              status="$(RESPONSE="$response" python3 -c 'import json, os; data=json.loads(os.environ["RESPONSE"]); print(data.get("skill_badges_completed"))' 2>/dev/null || true)"
+              safe_spaces_in_badges="$(RESPONSE="$response" python3 -c 'import json, os; data=json.loads(os.environ["RESPONSE"]); badges=[b.get("name") for b in data.get("completed_skill_badges", [])]; print("Safe Spaces" in badges)' 2>/dev/null || true)"
+              arcade_games_count="$(RESPONSE="$response" python3 -c 'import json, os; data=json.loads(os.environ["RESPONSE"]); print(int(data.get("arcade_games_completed", 0)))' 2>/dev/null || true)"
               has_completed_badges="$(RESPONSE="$response" python3 -c 'import json, os; data=json.loads(os.environ["RESPONSE"]); print("completed_skill_badges" in data)' 2>/dev/null || true)"
 
-              if [ "$status" = "13" ] && [ "$has_completed_badges" = "True" ]; then
-                echo "Production API verified: Safe Spaces is not counted as a skill badge."
+              if [ "$safe_spaces_in_badges" = "False" ] && [ "$has_completed_badges" = "True" ] && [ "$arcade_games_count" -ge 10 ] 2>/dev/null; then
+                echo "Production API verified: August arcade games loaded and Safe Spaces is not counted as a skill badge."
                 exit 0
               fi
 
-              echo "Attempt ${attempt}/30: API not updated yet; skill_badges_completed=${status:-unknown}, completed_skill_badges field=${has_completed_badges:-unknown}."
+              echo "Attempt ${attempt}/30: API not updated yet; arcade_games_completed=${arcade_games_count:-unknown}, completed_skill_badges field=${has_completed_badges:-unknown}."
             else
               echo "Attempt ${attempt}/30: API did not return a usable response."
             fi
