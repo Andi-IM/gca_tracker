@@ -13,7 +13,7 @@ PUBLIC_PROFILE_PREFIX = "https://www.skills.google/public_profiles/"
 
 
 class ArcadeTrackerHandler(BaseHTTPRequestHandler):
-    server_version = "ArcadeTrackerPythonAPI/0.1"
+    server_version = "ArcadeTrackerPythonAPI/0.1.1"
 
     def do_GET(self) -> None:
         parsed_url = urlparse(self.path)
