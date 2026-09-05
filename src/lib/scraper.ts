@@ -122,13 +122,24 @@ export async function scrapePublicProfile(url: string): Promise<ScrapedProfile> 
     throw new Error('API scraper belum berjalan. Jalankan server API di http://localhost:3001 lalu coba lagi.');
   }
 
-  if (response.status === 404) {
-    throw new Error('Endpoint scraper tidak ditemukan. Pastikan Astro dev proxy atau PUBLIC_API_URL mengarah ke server API.');
+  let data: { error?: string } & Partial<ScrapedProfile> | null = null;
+  try {
+    data = await response.json();
+  } catch {
+    // Response bukan JSON (misal halaman HTML 404 bawaan web server)
   }
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  
-  const data = await response.json();
-  if (data.error) throw new Error(data.error);
-  
-  return data;
+
+  if (data?.error) {
+    throw new Error(data.error);
+  }
+
+  if (response.status === 404) {
+    throw new Error('Endpoint scraper tidak ditemukan (404). Jika di lingkungan lokal, pastikan server API sudah dijalankan ("npm run dev:api"). Jika di production, pastikan variabel lingkungan PUBLIC_API_URL sudah diset ke URL backend API.');
+  }
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  return data as ScrapedProfile;
 }
