@@ -138,41 +138,61 @@ window.SYLLABUS_ASSERTIONS = {
       "completed": false
     },
     {
-      "id": 7500,
-      "name": "Arcade Base Camp September 2026",
+      "id": 7441,
+      "name": "Arcade Adventure (SEP 2026)",
       "release_month": "2026-09",
-      "code": "1q-basecamp-0926",
-      "url": "https://www.skills.google/games/7500?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "code": "1q-architecture-01381",
+      "url": "https://www.skills.google/games/7441?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
       "type": "arcade_game",
       "status": "active",
       "completed": false
     },
     {
-      "id": 7501,
-      "name": "Arcade Adventure: Modern Cloud Architecture",
+      "id": 7442,
+      "name": "Arcade Voyage (SEP 2026)",
       "release_month": "2026-09",
-      "code": "1q-adv-0926",
-      "url": "https://www.skills.google/games/7501?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "code": "1q-microservice-9210",
+      "url": "https://www.skills.google/games/7442?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
       "type": "arcade_game",
       "status": "active",
       "completed": false
     },
     {
-      "id": 7502,
-      "name": "Arcade Voyage: App Modernization",
+      "id": 7443,
+      "name": "Arcade Trail (SEP 2026)",
       "release_month": "2026-09",
-      "code": "1q-voy-0926",
-      "url": "https://www.skills.google/games/7502?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "code": "1q-vpcpeering-3469",
+      "url": "https://www.skills.google/games/7443?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
       "type": "arcade_game",
       "status": "active",
       "completed": false
     },
     {
-      "id": 7503,
-      "name": "Arcade Trail: Data Engineering & Security",
+      "id": 7444,
+      "name": "Arcade Base Camp (SEPTEMBER 2026)",
       "release_month": "2026-09",
-      "code": "1q-trail-0926",
-      "url": "https://www.skills.google/games/7503?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "code": "1q-basecamp-09304",
+      "url": "https://www.skills.google/games/7444?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
+    },
+    {
+      "id": 7445,
+      "name": "Arcade Simulator: DevOps Engineer (SEP 2026)",
+      "release_month": "2026-09",
+      "code": "1q-devops-065131",
+      "url": "https://www.skills.google/games/7445?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
+      "type": "arcade_game",
+      "status": "active",
+      "completed": false
+    },
+    {
+      "id": 7446,
+      "name": "Pitch Perfect (SEP 2026)",
+      "release_month": "2026-09",
+      "code": "1q-analysis-5026",
+      "url": "https://www.skills.google/games/7446?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
       "type": "arcade_game",
       "status": "active",
       "completed": false
@@ -711,10 +731,12 @@ window.SYLLABUS_ASSERTIONS = {
         7426
       ],
       "september_2026": [
-        7500,
-        7501,
-        7502,
-        7503
+        7441,
+        7442,
+        7443,
+        7444,
+        7445,
+        7446
       ]
     },
     "listed_skill_badges_total": 51,
@@ -725,7 +747,7 @@ window.SYLLABUS_ASSERTIONS = {
     },
     "additional_badges_needed_for_ultimate": 15,
     "arcade_game_catalog_scope": "july_2026_and_august_2026_and_september_2026_release",
-    "note": "Nama dan URL badge individual diambil dari halaman Silabus resmi RSVP Google Skills Arcade Fasilitator 2026. Arcade Games yang tercantum mencakup rilis Juli 2026 (ID 7313-7318) dan Agustus 2026 (ID 7394-7399, 7426); bulan September perlu diverifikasi tersendiri. Data Agustus diperbarui pada 2026-08-19.",
+    "note": "Nama dan URL badge individual diambil dari halaman Silabus resmi RSVP Google Skills Arcade Fasilitator 2026. Arcade Games yang tercantum mencakup rilis Juli 2026 (ID 7313-7318), Agustus 2026 (ID 7394-7399, 7426), dan September 2026 (ID 7441-7446). Data diperbarui pada 2026-09-05.",
     "skill_badge_source_url": "https://rsvp.withgoogle.com/events/arcade-fasilitator-id/silabus"
   }
 };

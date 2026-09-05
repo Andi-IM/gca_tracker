@@ -78,7 +78,7 @@ export function getNextTargetPlan(
   const nextMilestone = result.next_milestone ?? null;
   const gameGap = result.gaps?.games ?? 0;
   const badgeGap = result.gaps?.badges ?? 0;
-  const arcadeTargets = scraped?.target_arcade_games || buildArcadeGameTargets(syllabus, scraped?.matched_arcade_games || []);
+  const arcadeTargets = buildArcadeGameTargets(syllabus, scraped?.matched_arcade_games || []);
   const skillTargets = scraped?.skill_badge_targets || buildSkillBadgeTargets(syllabus, completedBadges.length, completedBadges);
   const completedSkillTargets = skillTargets.filter((badge) => badge.completed);
   const missingSkillTargets = skillTargets.filter((badge) => !badge.completed);

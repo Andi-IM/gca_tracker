@@ -67,6 +67,39 @@ function renderArcadeTarget(game: ArcadeGame) {
   );
 }
 
+function renderArcadeTargetGroups(arcadeTargets: ArcadeGame[]) {
+  const months = [
+    { key: '2026-09', label: 'September 2026' },
+    { key: '2026-08', label: 'Agustus 2026' },
+    { key: '2026-07', label: 'Juli 2026' },
+  ];
+
+  const grouped = months.map((month) => ({
+    ...month,
+    games: arcadeTargets.filter((game) => (game.release_month || '2026-07') === month.key)
+  })).filter((group) => group.games.length > 0);
+
+  if (grouped.length === 0) {
+    return <div class="completed-summary">Tidak ada arcade game yang cocok dengan filter.</div>;
+  }
+
+  return (
+    <>
+      {grouped.map((group) => (
+        <div class="level-group" key={group.key}>
+          <div class="level-group-header">
+            <h4>{group.label}</h4>
+            <span class="level-group-count">{group.games.length}</span>
+          </div>
+          <ul class="target-list">
+            {group.games.map(renderArcadeTarget)}
+          </ul>
+        </div>
+      ))}
+    </>
+  );
+}
+
 function renderSkillTarget(badge: SkillBadge) {
   return (
     <li key={badge.id || badge.name}>
@@ -266,14 +299,12 @@ export default function TargetPanel({ syllabus, result, scrapeResult, arcadeGame
 
       <div class="target-grid target-accordion-list" aria-live="polite">
         <TargetAccordion
-          title={`Arcade Games ${programStatus.release_label}`}
+          title={`Arcade Games (${programStatus.release_label})`}
           count={filteredArcadeTargets.length}
-          description="Target game resmi bulan ini."
+          description="Target game resmi dari Juli hingga September 2026."
           defaultOpen={filteredArcadeTargets.some((target) => !target.completed)}
         >
-          <ul class="target-list">
-            {filteredArcadeTargets.map(renderArcadeTarget)}
-          </ul>
+          {renderArcadeTargetGroups(filteredArcadeTargets)}
         </TargetAccordion>
         <TargetAccordion
           title="Badge Belum Selesai"
