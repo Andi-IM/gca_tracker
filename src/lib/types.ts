@@ -6,6 +6,7 @@ export interface ArcadeGame {
   release_month?: string;
   type?: string;
   status?: string;
+  aliases?: string[];
   completed?: boolean;
 }
 

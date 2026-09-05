@@ -34,7 +34,10 @@ function isArcadeBadgeTitle(title: string, arcadeGames: ArcadeGame[] = []): bool
   if (/\barcade\b/i.test(title)) return true;
 
   const normalizedTitle = normalizeTitle(title);
-  return arcadeGames.some((game) => normalizeTitle(game.name) === normalizedTitle);
+  return arcadeGames.some((game) => {
+    const names = [game.name, ...(game.aliases || [])];
+    return names.some((n) => normalizeTitle(n) === normalizedTitle);
+  });
 }
 
 function dedupeByName<T extends { name: string }>(items: T[]): T[] {
@@ -58,8 +61,12 @@ function findCompletedJulyArcadeGames(html: string, normalizedText: string, arca
   return arcadeGames.filter((game) => {
     const gameUrlPattern = new RegExp(`(?:/games/|games%2F)${game.id}(?:\\D|$)`, 'i');
     const codePattern = new RegExp(escapeRegExp(game.code), 'i');
-    const namePattern = new RegExp(`\\b${escapeRegExp(game.name)}\\b`, 'i');
-    return gameUrlPattern.test(html) || codePattern.test(html) || namePattern.test(normalizedText);
+    const names = [game.name, ...(game.aliases || [])];
+    const nameMatch = names.some((n) => {
+      const escaped = escapeRegExp(n);
+      return new RegExp(`(?:^|\\W)${escaped}(?:$|\\W)`, 'i').test(normalizedText);
+    });
+    return gameUrlPattern.test(html) || codePattern.test(html) || nameMatch;
   });
 }
 

@@ -26,6 +26,7 @@ def build_arcade_game_targets(syllabus: dict, matched_arcade_games: list[dict]) 
             "code": game.get("code"),
             "url": game.get("url") or None,
             "release_month": game.get("release_month") or "2026-07",
+            "aliases": game.get("aliases") or [],
             "completed": game.get("id") in matched_ids,
         }
         for game in syllabus.get("arcade_games", [])

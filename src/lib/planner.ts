@@ -33,6 +33,7 @@ export function buildArcadeGameTargets(syllabus: SyllabusAssertions, matchedArca
     code: game.code,
     url: game.url || undefined,
     release_month: game.release_month || '2026-07',
+    aliases: game.aliases || [],
     completed: matchedIds.has(game.id)
   }));
 }

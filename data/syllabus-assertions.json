@@ -139,7 +139,10 @@
     },
     {
       "id": 7441,
-      "name": "Arcade Adventure (SEP 2026)",
+      "name": "Arcade Adventure: Modern Cloud Architecture",
+      "aliases": [
+        "Arcade Adventure (SEP 2026)"
+      ],
       "release_month": "2026-09",
       "code": "1q-architecture-01381",
       "url": "https://www.skills.google/games/7441?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
@@ -149,7 +152,10 @@
     },
     {
       "id": 7442,
-      "name": "Arcade Voyage (SEP 2026)",
+      "name": "Arcade Voyage: App Modernization",
+      "aliases": [
+        "Arcade Voyage (SEP 2026)"
+      ],
       "release_month": "2026-09",
       "code": "1q-microservice-9210",
       "url": "https://www.skills.google/games/7442?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
@@ -159,7 +165,11 @@
     },
     {
       "id": 7443,
-      "name": "Arcade Trail (SEP 2026)",
+      "name": "Arcade Trail: Data Engineering & Security",
+      "aliases": [
+        "Arcade Trail: Data Engineering and Security",
+        "Arcade Trail (SEP 2026)"
+      ],
       "release_month": "2026-09",
       "code": "1q-vpcpeering-3469",
       "url": "https://www.skills.google/games/7443?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
@@ -169,7 +179,10 @@
     },
     {
       "id": 7444,
-      "name": "Arcade Base Camp (SEPTEMBER 2026)",
+      "name": "Arcade Base Camp September 2026",
+      "aliases": [
+        "Arcade Base Camp (SEPTEMBER 2026)"
+      ],
       "release_month": "2026-09",
       "code": "1q-basecamp-09304",
       "url": "https://www.skills.google/games/7444?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
@@ -179,7 +192,10 @@
     },
     {
       "id": 7445,
-      "name": "Arcade Simulator: DevOps Engineer (SEP 2026)",
+      "name": "Arcade Simulator: DevOps Engineer",
+      "aliases": [
+        "Arcade Simulator: DevOps Engineer (SEP 2026)"
+      ],
       "release_month": "2026-09",
       "code": "1q-devops-065131",
       "url": "https://www.skills.google/games/7445?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",
@@ -189,7 +205,10 @@
     },
     {
       "id": 7446,
-      "name": "Pitch Perfect (SEP 2026)",
+      "name": "Pitch Perfect",
+      "aliases": [
+        "Pitch Perfect (SEP 2026)"
+      ],
       "release_month": "2026-09",
       "code": "1q-analysis-5026",
       "url": "https://www.skills.google/games/7446?utm_source=gcaf-site&utm_medium=website&utm_campaign=arcade-facilitator26",

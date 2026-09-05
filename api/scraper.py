@@ -147,11 +147,13 @@ def _is_arcade_badge_title(title: str, arcade_games: list[dict] | None = None) -
         return True
 
     normalized_title = normalize_title(title or "")
-    return normalized_title in {
-        normalize_title(game.get("name", ""))
-        for game in (arcade_games or [])
-        if game.get("name")
-    }
+    all_names = set()
+    for game in arcade_games or []:
+        if game.get("name"):
+            all_names.add(normalize_title(game["name"]))
+        for alias in game.get("aliases") or []:
+            all_names.add(normalize_title(alias))
+    return normalized_title in all_names
 
 
 def _dedupe_by_name(items: list[dict]) -> list[dict]:
@@ -182,11 +184,15 @@ def _find_completed_july_arcade_games(html: str, normalized_text: str, arcade_ga
     for game in arcade_games:
         game_id = game.get("id")
         code = game.get("code", "")
-        name = game.get("name", "")
+        names = [game.get("name", "")] + (game.get("aliases") or [])
         game_url_pattern = re.compile(rf"(?:/games/|games%2F){escape_regexp(str(game_id))}(?:\D|$)", re.IGNORECASE)
         code_pattern = re.compile(escape_regexp(code), re.IGNORECASE)
-        name_pattern = re.compile(rf"\b{escape_regexp(name)}\b", re.IGNORECASE)
-        if game_url_pattern.search(html or "") or code_pattern.search(html or "") or name_pattern.search(normalized_text or ""):
+        name_matched = any(
+            re.search(rf"(?:^|\W){escape_regexp(n)}(?:$|\W)", normalized_text or "", re.IGNORECASE)
+            for n in names
+            if n
+        )
+        if game_url_pattern.search(html or "") or code_pattern.search(html or "") or name_matched:
             matches.append(game)
     return matches
 
