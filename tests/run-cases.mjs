@@ -168,28 +168,32 @@ assert.equal(syllabusAssertions.source.title, 'Silabus');
 assert.equal(syllabusAssertions.source.program, 'Google Skills Arcade Fasilitator 2026');
 assert.equal(syllabusAssertions.source.release_month, '2026-07');
 assert.equal(syllabusAssertions.source.release_label, 'Juli 2026');
-assert.equal(syllabusAssertions.arcade_games.length, 13);
+assert.equal(syllabusAssertions.arcade_games.length, 17);
 assert.deepEqual(
   syllabusAssertions.arcade_games.map((game) => game.id).sort((left, right) => left - right),
-  [7313, 7314, 7315, 7316, 7317, 7318, 7394, 7395, 7396, 7397, 7398, 7399, 7426]
+  [7313, 7314, 7315, 7316, 7317, 7318, 7394, 7395, 7396, 7397, 7398, 7399, 7426, 7500, 7501, 7502, 7503]
 );
 assert.ok(syllabusAssertions.arcade_games.every((game) => game.type === 'arcade_game'));
 assert.ok(syllabusAssertions.arcade_games.every((game) => game.status === 'active'));
 assert.ok(syllabusAssertions.arcade_games.every((game) => game.completed === false));
-assert.ok(syllabusAssertions.arcade_games.every((game) => ['2026-07', '2026-08'].includes(game.release_month)));
+assert.ok(syllabusAssertions.arcade_games.every((game) => ['2026-07', '2026-08', '2026-09'].includes(game.release_month)));
 assert.ok(syllabusAssertions.arcade_games.every((game) => game.url.includes(`games/${game.id}`)));
 assert.deepEqual(
   syllabusAssertions.arcade_games.map((game) => game.name).sort(),
   [
     'Arcade Adventure: Data Vault',
     'Arcade Adventure: Low-Code Development',
+    'Arcade Adventure: Modern Cloud Architecture',
     'Arcade Base Camp August 2026',
     'Arcade Base Camp July 2026',
+    'Arcade Base Camp September 2026',
     'Arcade Re-Trail: Vaults & Vectors',
     'Arcade Simulator: Data Mesh Architect',
     'Arcade Simulator: Network Security Engineer',
     'Arcade Trail: Cloud Delivery Systems',
+    'Arcade Trail: Data Engineering & Security',
     'Arcade Trail: Google Workspace Administration',
+    'Arcade Voyage: App Modernization',
     'Arcade Voyage: Cloud Storage and Data Governance',
     'Arcade Voyage: Google Sheets',
     'Safe Spaces',
@@ -198,13 +202,14 @@ assert.deepEqual(
 );
 assert.equal(syllabusAssertions.meta.listed_skill_badges_total, 51);
 assert.equal(syllabusAssertions.meta.additional_badges_needed_for_ultimate, 15);
-assert.equal(syllabusAssertions.meta.arcade_game_catalog_scope, 'july_2026_and_august_2026_release');
+assert.equal(syllabusAssertions.meta.arcade_game_catalog_scope, 'july_2026_and_august_2026_and_september_2026_release');
 assert.deepEqual(syllabusAssertions.meta.program_period, {
   starts_at: '2026-07-13T10:00:00+07:00',
   ends_at: '2026-09-14T23:59:00+07:00'
 });
 assert.deepEqual(syllabusAssertions.meta.monthly_releases.july_2026.sort((left, right) => left - right), [7313, 7314, 7315, 7316, 7317, 7318]);
 assert.deepEqual(syllabusAssertions.meta.monthly_releases.august_2026.sort((left, right) => left - right), [7394, 7395, 7396, 7397, 7398, 7399, 7426]);
+assert.deepEqual(syllabusAssertions.meta.monthly_releases.september_2026.sort((left, right) => left - right), [7500, 7501, 7502, 7503]);
 assert.deepEqual(syllabusAssertions.meta.listed_distribution, {
   beginner: 17,
   intermediate: 17,
@@ -275,10 +280,10 @@ const scrapedSample = scrapeProfileHtml(`
 assert.equal(scrapedSample.arcade_games_completed, 2);
 assert.equal(scrapedSample.skill_badges_completed, 3);
 assert.equal(scrapedSample.completed_skill_badges.length, 0);
-assert.equal(scrapedSample.target_arcade_games.length, 13);
+assert.equal(scrapedSample.target_arcade_games.length, 17);
 assert.equal(scrapedSample.skill_badge_targets.length, 51);
 assert.equal(scrapedSample.completed_arcade_games.length, 2);
-assert.equal(scrapedSample.missing_arcade_games.length, 11);
+assert.equal(scrapedSample.missing_arcade_games.length, 15);
 assert.equal(scrapedSample.completed_skill_badge_targets.length, 3);
 assert.equal(scrapedSample.missing_skill_badge_targets.length, 48);
 assert.ok(scrapedSample.target_arcade_games.every((game) => game.url.includes(`games/${game.id}`)));
@@ -293,13 +298,17 @@ assert.deepEqual(
   scrapedSample.target_arcade_games.filter((game) => !game.completed).map((game) => game.name).sort(),
   [
     'Arcade Adventure: Data Vault',
+    'Arcade Adventure: Modern Cloud Architecture',
     'Arcade Base Camp August 2026',
     'Arcade Base Camp July 2026',
+    'Arcade Base Camp September 2026',
     'Arcade Re-Trail: Vaults & Vectors',
     'Arcade Simulator: Data Mesh Architect',
     'Arcade Simulator: Network Security Engineer',
     'Arcade Trail: Cloud Delivery Systems',
+    'Arcade Trail: Data Engineering & Security',
     'Arcade Trail: Google Workspace Administration',
+    'Arcade Voyage: App Modernization',
     'Arcade Voyage: Cloud Storage and Data Governance',
     'Arcade Voyage: Google Sheets',
     'Safe Spaces',

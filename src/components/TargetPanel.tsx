@@ -1,3 +1,4 @@
+/** @jsxImportSource preact */
 import type { CalculatorResult } from '../lib/calculator';
 import type { ScrapedProfile, SyllabusAssertions, ArcadeGame, SkillBadge } from '../lib/types';
 import type { ComponentChildren } from 'preact';
@@ -21,7 +22,7 @@ interface TargetAccordionProps {
   description: string;
   defaultOpen?: boolean;
   className?: string;
-  children: ComponentChildren;
+  children?: ComponentChildren;
 }
 
 function TargetAccordion({ title, count, description, defaultOpen = false, className = '', children }: TargetAccordionProps) {
@@ -265,7 +266,7 @@ export default function TargetPanel({ syllabus, result, scrapeResult, arcadeGame
 
       <div class="target-grid target-accordion-list" aria-live="polite">
         <TargetAccordion
-          title="Arcade Games Juli 2026"
+          title={`Arcade Games ${programStatus.release_label}`}
           count={filteredArcadeTargets.length}
           description="Target game resmi bulan ini."
           defaultOpen={filteredArcadeTargets.some((target) => !target.completed)}

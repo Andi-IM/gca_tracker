@@ -1,3 +1,4 @@
+/** @jsxImportSource preact */
 import { useState, useEffect } from 'preact/hooks';
 import { calculateProgress } from '../lib/calculator';
 import { loadSyllabus } from '../lib/planner';

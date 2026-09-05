@@ -1,3 +1,4 @@
+/** @jsxImportSource preact */
 interface InputPanelProps {
   publicProfileUrl: string;
   arcadeGames: number;

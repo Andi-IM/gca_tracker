@@ -1,3 +1,4 @@
+/** @jsxImportSource preact */
 import type { CalculatorResult } from '../lib/calculator';
 
 interface OutputPanelProps {

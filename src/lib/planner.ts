@@ -75,7 +75,7 @@ export function getNextTargetPlan(
   completedBadges: { name: string }[] = [],
   scraped: ScrapedProfile | null = null
 ): TargetPlan {
-  const nextMilestone = result.next_milestone;
+  const nextMilestone = result.next_milestone ?? null;
   const gameGap = result.gaps?.games ?? 0;
   const badgeGap = result.gaps?.badges ?? 0;
   const arcadeTargets = scraped?.target_arcade_games || buildArcadeGameTargets(syllabus, scraped?.matched_arcade_games || []);
